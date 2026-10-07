@@ -164,6 +164,7 @@
     section { padding: 20px; }
   }
 </style>
+<link rel="stylesheet" href="exercises.css">
 </head>
 <body>
 
@@ -172,7 +173,7 @@
     <a href="index.html" aria-current="page">1. HTML basics</a>
     <a href="css.html">2. CSS</a>
     <a href="advanced.html">3. Advanced HTML</a>
-    <a href="javascript.html">4. JavaScript</a>
+    <a href="javascript.html">4. JavaScript</a><a href="sandbox.html">5. Sandbox</a><a href="cheatsheet.html">Cheat sheet</a>
   </nav>
   <h1>Learn HTML</h1>
   <p>A hands-on introduction for complete beginners. Edit the code in each box and watch the result change instantly.</p>
@@ -188,7 +189,7 @@
       <li><a href="#lists">5. Lists</a></li>
       <li><a href="#tables">6. Tables</a></li>
       <li><a href="#forms">7. Forms</a></li>
-      <li><a href="#next">8. Next steps</a></li>
+      <li><a href="#exercises">8. Exercises</a></li><li><a href="#next">9. Next steps</a></li>
     </ol>
   </nav>
 
@@ -368,8 +369,8 @@
       <div class="tip">Try clicking Send with the email field empty. The browser validates it for you.</div>
     </section>
 
-    <section id="next">
-      <h2><span class="num">8</span>Next steps</h2>
+    <section id="exercises" data-page="index"><h2><span class="num">8</span>Exercises</h2><p>Put it into practice. Edit the code, then press <strong>Check my answer</strong>. Your progress is saved in this browser.</p><p class="progress" id="ex-progress"></p><div id="ex-list"></div></section><section id="next">
+      <h2><span class="num">9</span>Next steps</h2>
       <p>You now know the building blocks. Here is a quick reference and where to go next.</p>
       <table class="ref">
         <thead><tr><th>Element</th><th>Use it for</th></tr></thead>
@@ -433,5 +434,7 @@
   );
   document.querySelectorAll('section').forEach((s) => observer.observe(s));
 </script>
+<script src="exercises-data.js"></script>
+<script src="exercises.js"></script>
 </body>
 </html>

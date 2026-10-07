@@ -1,0 +1,210 @@
+window.EXERCISES = {
+  index: [
+    {
+      title: 'Heading and paragraph',
+      instructions: 'Add an `<h1>` heading followed by a `<p>` paragraph. Put any text you like in each.',
+      starter: '<!-- Write your HTML below -->\n',
+      hint: 'An h1 opens with `<h1>` and closes with `</h1>`. A paragraph uses `<p>` and `</p>`.',
+      solution: '<h1>My page</h1>\n<p>Hello there.</p>',
+      tests: [
+        ['There is an h1 with some text', "const h = $('h1'); return !!h && h.textContent.trim().length > 0"],
+        ['There is a paragraph with some text', "const p = $('p'); return !!p && p.textContent.trim().length > 0"],
+        ['The h1 comes before the paragraph', "const h = $('h1'), p = $('p'); return !!h && !!p && !!(h.compareDocumentPosition(p) & Node.DOCUMENT_POSITION_FOLLOWING)"],
+      ],
+    },
+    {
+      title: 'A link',
+      instructions: 'Create a link with the text `Visit Example` that goes to `https://example.com` and opens in a new tab.',
+      starter: '<p>Welcome! </p>\n',
+      hint: 'Use `<a href="...">` and add `target="_blank"` to open a new tab.',
+      solution: '<p>Welcome! <a href="https://example.com" target="_blank" rel="noopener">Visit Example</a></p>',
+      tests: [
+        ['There is a link', "return !!$('a[href]')"],
+        ['The link goes to https://example.com', "const a = $('a'); return !!a && a.href.startsWith('https://example.com')"],
+        ['The link text is "Visit Example"', "const a = $('a'); return !!a && a.textContent.trim().toLowerCase() === 'visit example'"],
+        ['The link opens in a new tab', "const a = $('a'); return !!a && a.target === '_blank'"],
+      ],
+    },
+    {
+      title: 'A numbered list',
+      instructions: 'Make a numbered list with at least three steps for making tea.',
+      starter: '<h2>Making tea</h2>\n',
+      hint: 'Numbered lists use `<ol>`. Each step goes in its own `<li>`.',
+      solution: '<h2>Making tea</h2>\n<ol>\n  <li>Boil the kettle</li>\n  <li>Add the tea bag</li>\n  <li>Pour in water</li>\n</ol>',
+      tests: [
+        ['There is an ordered list (ol)', "return !!$('ol')"],
+        ['It has at least three list items', "return $$('ol > li').length >= 3"],
+        ['Every list item has text', "const items = $$('ol > li'); return items.length > 0 && items.every((li) => li.textContent.trim().length > 0)"],
+      ],
+    },
+    {
+      title: 'A table',
+      instructions: 'Build a table with one header row and two data rows. Use `<th>` for header cells and `<td>` for data cells.',
+      starter: '<!-- Build your table below -->\n',
+      hint: 'Each row is a `<tr>`. A header row contains `<th>` cells, the others contain `<td>` cells.',
+      solution: '<table border="1">\n  <tr><th>Name</th><th>Role</th></tr>\n  <tr><td>Ada</td><td>Engineer</td></tr>\n  <tr><td>Grace</td><td>Admiral</td></tr>\n</table>',
+      tests: [
+        ['There is a table', "return !!$('table')"],
+        ['It has header cells (th)', "return $$('th').length >= 1"],
+        ['It has at least three rows in total', "return $$('tr').length >= 3"],
+        ['It has at least two data cells (td)', "return $$('td').length >= 2"],
+      ],
+    },
+  ],
+
+  css: [
+    {
+      title: 'Colour and centre',
+      instructions: 'Make the `h1` red and centre its text.',
+      starter: '<style>\n\n</style>\n\n<h1>Hello CSS</h1>',
+      hint: 'You need two declarations inside an `h1 { }` rule: `color` and `text-align`.',
+      solution: '<style>\n  h1 {\n    color: red;\n    text-align: center;\n  }\n</style>\n\n<h1>Hello CSS</h1>',
+      tests: [
+        ['The heading is red', "return css('h1', 'color') === rgb('red')"],
+        ['The heading text is centred', "return css('h1', 'textAlign') === 'center'"],
+      ],
+    },
+    {
+      title: 'The box model',
+      instructions: 'Give `.card` 20px of padding, a 2px solid border, and rounded corners with a 10px radius.',
+      starter: '<style>\n  .card {\n\n  }\n</style>\n\n<div class="card">A card</div>',
+      hint: 'Use `padding`, `border` (width, style and colour together) and `border-radius`.',
+      solution: '<style>\n  .card {\n    padding: 20px;\n    border: 2px solid #3b5bdb;\n    border-radius: 10px;\n  }\n</style>\n\n<div class="card">A card</div>',
+      tests: [
+        ['Padding is 20px', "return css('.card', 'paddingTop') === '20px'"],
+        ['The border is 2px wide', "return css('.card', 'borderTopWidth') === '2px'"],
+        ['The border style is solid', "return css('.card', 'borderTopStyle') === 'solid'"],
+        ['Corners have a 10px radius', "return css('.card', 'borderTopLeftRadius') === '10px'"],
+      ],
+    },
+    {
+      title: 'Flexbox',
+      instructions: 'Turn `.row` into a flex container with space between its items and a 10px gap.',
+      starter: '<style>\n  .row {\n\n  }\n</style>\n\n<div class="row">\n  <div>A</div>\n  <div>B</div>\n  <div>C</div>\n</div>',
+      hint: 'You need `display: flex`, `justify-content: space-between` and `gap: 10px`.',
+      solution: '<style>\n  .row {\n    display: flex;\n    justify-content: space-between;\n    gap: 10px;\n  }\n</style>\n\n<div class="row">\n  <div>A</div>\n  <div>B</div>\n  <div>C</div>\n</div>',
+      tests: [
+        ['.row is a flex container', "return css('.row', 'display') === 'flex'"],
+        ['Items are spaced with space-between', "return css('.row', 'justifyContent') === 'space-between'"],
+        ['The gap is 10px', "return css('.row', 'columnGap') === '10px'"],
+      ],
+    },
+    {
+      title: 'Class selectors',
+      instructions: 'Give elements with the class `highlight` a yellow background, without changing the other paragraphs.',
+      starter: '<style>\n\n</style>\n\n<p>Normal</p>\n<p class="highlight">Important</p>\n<p>Normal</p>',
+      hint: 'A class selector starts with a dot: `.highlight { ... }`.',
+      solution: '<style>\n  .highlight {\n    background: yellow;\n  }\n</style>\n\n<p>Normal</p>\n<p class="highlight">Important</p>\n<p>Normal</p>',
+      tests: [
+        ['The highlighted paragraph has a yellow background', "return css('p.highlight', 'backgroundColor') === rgb('yellow')"],
+        ['Other paragraphs have no background colour', "return css('p:not(.highlight)', 'backgroundColor') === 'rgba(0, 0, 0, 0)'"],
+      ],
+    },
+  ],
+
+  advanced: [
+    {
+      title: 'Semantic layout',
+      instructions: 'Replace the generic `<div>` elements with `<header>`, `<nav>`, `<main>` and `<footer>`.',
+      starter: '<div>My Site</div>\n<div><a href="#">Home</a> <a href="#">About</a></div>\n<div>\n  <h1>Welcome</h1>\n  <p>Main content goes here.</p>\n</div>\n<div>&copy; 2026 My Site</div>',
+      hint: 'The first block is the header, the second holds the links so it is the nav, the third is the main content and the last is the footer.',
+      solution: '<header>My Site</header>\n<nav><a href="#">Home</a> <a href="#">About</a></nav>\n<main>\n  <h1>Welcome</h1>\n  <p>Main content goes here.</p>\n</main>\n<footer>&copy; 2026 My Site</footer>',
+      tests: [
+        ['There is a header element', "return !!$('header')"],
+        ['There is a nav element containing the links', "return $$('nav a').length >= 2"],
+        ['There is a main element containing the h1', "return !!$('main h1')"],
+        ['There is a footer element', "return !!$('footer')"],
+      ],
+    },
+    {
+      title: 'Accessible image and button',
+      instructions: 'The image is a blue circle logo for a company called Acme. Give it helpful alt text, and give the icon-only button an accessible name that says what it does (it closes a dialog).',
+      starter: '<img src="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'80\'%3E%3Ccircle cx=\'40\' cy=\'40\' r=\'38\' fill=\'%233b5bdb\'/%3E%3C/svg%3E">\n<button>&times;</button>',
+      hint: 'Add an `alt` attribute to the image, and an `aria-label` to the button because its visible text is only a symbol.',
+      solution: '<img alt="Acme logo, a blue circle" src="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'80\'%3E%3Ccircle cx=\'40\' cy=\'40\' r=\'38\' fill=\'%233b5bdb\'/%3E%3C/svg%3E">\n<button aria-label="Close dialog">&times;</button>',
+      tests: [
+        ['The image has alt text of at least three characters', "const i = $('img'); return !!i && i.alt.trim().length >= 3"],
+        ['The button has an aria-label', "const b = $('button'); return !!b && (b.getAttribute('aria-label') || '').trim().length > 0"],
+      ],
+    },
+    {
+      title: 'Form validation',
+      instructions: 'Make the email field a required email input. Make the age field a number input that only accepts values from 18 to 99.',
+      starter: '<form>\n  <label>Email <input id="email"></label>\n  <label>Age <input id="age"></label>\n  <button>Send</button>\n</form>',
+      hint: 'Use `type="email"` with `required`, and `type="number"` with `min` and `max`.',
+      solution: '<form>\n  <label>Email <input id="email" type="email" required></label>\n  <label>Age <input id="age" type="number" min="18" max="99"></label>\n  <button>Send</button>\n</form>',
+      tests: [
+        ['The email input has type "email"', "const e = $('#email'); return !!e && e.type === 'email'"],
+        ['The email input is required', "const e = $('#email'); return !!e && e.required"],
+        ['The age input has type "number"', "const a = $('#age'); return !!a && a.type === 'number'"],
+        ['The age input has min 18 and max 99', "const a = $('#age'); return !!a && a.min === '18' && a.max === '99'"],
+      ],
+    },
+    {
+      title: 'A collapsible FAQ',
+      instructions: 'Create a collapsible FAQ using `<details>`. The `<summary>` should say `What is HTML?` and the hidden content should be a paragraph.',
+      starter: '<!-- Build your FAQ below -->\n',
+      hint: 'Put a `<summary>` and a `<p>` inside a `<details>` element.',
+      solution: '<details>\n  <summary>What is HTML?</summary>\n  <p>The language that gives web pages their structure.</p>\n</details>',
+      tests: [
+        ['There is a details element', "return !!$('details')"],
+        ['Its summary says "What is HTML?"', "const s = $('details > summary'); return !!s && s.textContent.trim().toLowerCase() === 'what is html?'"],
+        ['It contains a paragraph with text', "const p = $('details > p'); return !!p && p.textContent.trim().length > 0"],
+      ],
+    },
+  ],
+
+  javascript: [
+    {
+      title: 'Variables and logging',
+      instructions: 'Declare a constant called `total` equal to `7 * 6`, then log it with `console.log`.',
+      starter: '<script>\n  \n</script>',
+      hint: 'Start with `const total = ...;` then call `console.log(total);`.',
+      solution: '<script>\n  const total = 7 * 6;\n  console.log(total);\n</script>',
+      console: true,
+      tests: [
+        ['total is the number 42', "return typeof total === 'number' && total === 42"],
+        ['42 was logged to the console', "return logs.some((line) => line.includes('42'))"],
+      ],
+    },
+    {
+      title: 'Write a function',
+      instructions: 'Write a function called `isAdult(age)` that returns `true` when `age` is 18 or more, and `false` otherwise.',
+      starter: '<script>\n  \n</script>',
+      hint: 'A comparison like `age >= 18` already produces `true` or `false`, so you can return it directly.',
+      solution: '<script>\n  function isAdult(age) {\n    return age >= 18;\n  }\n</script>',
+      console: true,
+      tests: [
+        ['isAdult is a function', "return typeof isAdult === 'function'"],
+        ['isAdult(18) returns true', "return isAdult(18) === true"],
+        ['isAdult(17) returns false', "return isAdult(17) === false"],
+        ['isAdult(65) returns true', "return isAdult(65) === true"],
+      ],
+    },
+    {
+      title: 'Filter an array',
+      instructions: 'Create a constant called `evens` that holds only the even numbers from `numbers`. Use the `filter` method and leave `numbers` unchanged.',
+      starter: '<script>\n  const numbers = [1, 2, 3, 4, 5, 6];\n\n</script>',
+      hint: 'The test for an even number is `n % 2 === 0`. Pass it to `numbers.filter(...)`.',
+      solution: '<script>\n  const numbers = [1, 2, 3, 4, 5, 6];\n  const evens = numbers.filter((n) => n % 2 === 0);\n  console.log(evens);\n</script>',
+      console: true,
+      tests: [
+        ['evens is an array', "return Array.isArray(evens)"],
+        ['evens contains 2, 4 and 6', "return evens.join(',') === '2,4,6'"],
+        ['numbers still has six items', "return numbers.length === 6"],
+      ],
+    },
+    {
+      title: 'Respond to a click',
+      instructions: 'When the button is clicked, set the text of `#msg` to `Clicked!`. It should stay empty until then.',
+      starter: '<button id="btn">Click me</button>\n<p id="msg"></p>\n\n<script>\n  \n</script>',
+      hint: 'Select the button with `document.querySelector`, then use `addEventListener("click", ...)` and set `textContent` inside the handler.',
+      solution: '<button id="btn">Click me</button>\n<p id="msg"></p>\n\n<script>\n  const btn = document.querySelector("#btn");\n  const msg = document.querySelector("#msg");\n\n  btn.addEventListener("click", () => {\n    msg.textContent = "Clicked!";\n  });\n</script>',
+      console: true,
+      tests: [
+        ['The message is empty before any click', "return $('#msg').textContent.trim() === ''"],
+        ['Clicking the button sets the message to "Clicked!"', "$('#btn').click(); return $('#msg').textContent.trim() === 'Clicked!'"],
+      ],
+    },
+  ],
+};

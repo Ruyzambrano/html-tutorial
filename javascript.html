@@ -58,15 +58,16 @@
     section { padding: 20px; }
   }
 </style>
+<link rel="stylesheet" href="exercises.css">
 </head>
 <body data-console="true">
 <header>
-<nav class="series" aria-label="Tutorial series"><a href="index.html">1. HTML basics</a><a href="css.html">2. CSS</a><a href="advanced.html">3. Advanced HTML</a><a href="javascript.html" aria-current="page">4. JavaScript</a></nav>
+<nav class="series" aria-label="Tutorial series"><a href="index.html">1. HTML basics</a><a href="css.html">2. CSS</a><a href="advanced.html">3. Advanced HTML</a><a href="javascript.html" aria-current="page">4. JavaScript</a><a href="sandbox.html">5. Sandbox</a><a href="cheatsheet.html">Cheat sheet</a></nav>
 <h1>Learn JavaScript</h1>
 <p>Add behaviour to your pages. Run the code, change it, and see what happens.</p>
 </header>
 <div class="layout">
-<nav class="toc" aria-label="Tutorial sections"><ol><li><a href="#what">1. What is JavaScript?</a></li><li><a href="#variables">2. Variables and data types</a></li><li><a href="#functions">3. Functions and conditions</a></li><li><a href="#arrays">4. Arrays and loops</a></li><li><a href="#dom">5. Changing the page (the DOM)</a></li><li><a href="#events">6. Responding to events</a></li><li><a href="#project">7. Mini project: a to-do list</a></li><li><a href="#next">8. Next steps</a></li></ol></nav>
+<nav class="toc" aria-label="Tutorial sections"><ol><li><a href="#what">1. What is JavaScript?</a></li><li><a href="#variables">2. Variables and data types</a></li><li><a href="#functions">3. Functions and conditions</a></li><li><a href="#arrays">4. Arrays and loops</a></li><li><a href="#dom">5. Changing the page (the DOM)</a></li><li><a href="#events">6. Responding to events</a></li><li><a href="#project">7. Mini project: a to-do list</a></li><li><a href="#exercises">8. Exercises</a></li><li><a href="#next">9. Next steps</a></li></ol></nav>
 <main><section id="what"><h2><span class="num">1</span>What is JavaScript?</h2><p>HTML gives a page structure, CSS styles it, and JavaScript makes it <strong>do</strong> things: respond to clicks, update content, validate input. It goes inside a <code class="inline">&lt;script&gt;</code> element, usually at the end of <code class="inline">&lt;body&gt;</code>.</p><p><code class="inline">console.log()</code> prints a value for debugging. In these examples it prints into the green box under the result. In a real browser you would see it in the developer tools console (F12).</p><div class="playground"><div><div class="pane-label">HTML + JavaScript</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;h1 id=&quot;title&quot;&gt;Hello&lt;/h1&gt;
 
 &lt;script&gt;
@@ -177,9 +178,9 @@
   });
 
   render();
-&lt;/script&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip"><strong>Challenge:</strong> make completed tasks strike through instead of disappearing. You will need an object per task, such as <code class="inline">{ text: &quot;...&quot;, done: false }</code>.</div></section><section id="next"><h2><span class="num">8</span>Next steps</h2><p>You have now seen the full front-end trio working together.</p><table class="ref"><thead><tr><th>Concept</th><th>Remember</th></tr></thead><tbody><tr><td><code class="inline">const</code> / <code class="inline">let</code></td><td>Prefer <code class="inline">const</code>; use <code class="inline">let</code> when the value changes</td></tr><tr><td>Functions</td><td>Reusable blocks; arrow functions for short ones</td></tr><tr><td><code class="inline">map</code> / <code class="inline">filter</code> / <code class="inline">reduce</code></td><td>Transform arrays without mutating them</td></tr><tr><td><code class="inline">querySelector</code></td><td>Find elements to read or change</td></tr><tr><td><code class="inline">addEventListener</code></td><td>Run code when something happens</td></tr></tbody></table><p>Good places to go from here: fetching data from APIs with <code class="inline">fetch()</code>, saving data with <code class="inline">localStorage</code>, and a framework such as React once the fundamentals feel comfortable. The <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting" target="_blank" rel="noopener">MDN JavaScript guide</a> is the best free reference.</p></section></main>
+&lt;/script&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip"><strong>Challenge:</strong> make completed tasks strike through instead of disappearing. You will need an object per task, such as <code class="inline">{ text: &quot;...&quot;, done: false }</code>.</div></section><section id="exercises" data-page="javascript"><h2><span class="num">8</span>Exercises</h2><p>Put it into practice. Edit the code, then press <strong>Check my answer</strong>. Your progress is saved in this browser.</p><p class="progress" id="ex-progress"></p><div id="ex-list"></div></section><section id="next"><h2><span class="num">9</span>Next steps</h2><p>You have now seen the full front-end trio working together.</p><table class="ref"><thead><tr><th>Concept</th><th>Remember</th></tr></thead><tbody><tr><td><code class="inline">const</code> / <code class="inline">let</code></td><td>Prefer <code class="inline">const</code>; use <code class="inline">let</code> when the value changes</td></tr><tr><td>Functions</td><td>Reusable blocks; arrow functions for short ones</td></tr><tr><td><code class="inline">map</code> / <code class="inline">filter</code> / <code class="inline">reduce</code></td><td>Transform arrays without mutating them</td></tr><tr><td><code class="inline">querySelector</code></td><td>Find elements to read or change</td></tr><tr><td><code class="inline">addEventListener</code></td><td>Run code when something happens</td></tr></tbody></table><p>Good places to go from here: fetching data from APIs with <code class="inline">fetch()</code>, saving data with <code class="inline">localStorage</code>, and a framework such as React once the fundamentals feel comfortable. The <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting" target="_blank" rel="noopener">MDN JavaScript guide</a> is the best free reference.</p></section></main>
 </div>
-<div class="pager"><a href="advanced.html">&larr; Advanced HTML</a><span></span></div>
+<div class="pager"><a href="advanced.html">&larr; Advanced HTML</a><a class="primary" href="sandbox.html">Next: Sandbox &rarr;</a></div>
 <footer>Edit any box above to experiment. Nothing you type is saved or sent anywhere.</footer>
 <script>
   const CONSOLE_SHIM = `<script>
@@ -238,5 +239,7 @@
   );
   document.querySelectorAll('section').forEach((s) => observer.observe(s));
 </script>
+<script src="exercises-data.js"></script>
+<script src="exercises.js"></script>
 </body>
 </html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sandbox</title>
+<style>
+  :root {
+    --bg: #f7f8fa; --surface: #ffffff; --text: #1d2433; --muted: #5b6475;
+    --accent: #3b5bdb; --accent-soft: #e7ecff; --border: #dde1ea; --code-bg: #12151f; --code-text: #e6e9f2;
+    --warn: #f0b429; --error: #ff6b6b; --ok: #9be9a8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1219; --surface: #181c27; --text: #e6e9f2; --muted: #9aa3b5;
+      --accent: #8da2ff; --accent-soft: #232a45; --border: #2a3042; --code-bg: #0b0d13;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  header { padding: 40px 16px 32px; text-align: center; background: var(--accent-soft); border-bottom: 1px solid var(--border); }
+  header h1 { margin: 0 0 8px; font-size: clamp(2rem, 6vw, 3rem); }
+  header p { margin: 0 auto; max-width: 560px; color: var(--muted); }
+  .series { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 28px; }
+  .series a { padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); text-decoration: none; font-size: 0.9rem; }
+  .series a:hover { color: var(--accent); border-color: var(--accent); }
+  .series a[aria-current="page"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+  main { max-width: 1280px; margin: 0 auto; padding: 24px 16px 16px; }
+  .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 16px; }
+  .toolbar .spacer { flex: 1; }
+  .toolbar .status { color: var(--muted); font-size: 0.85rem; }
+  button { font: inherit; font-size: 0.9rem; padding: 6px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; }
+  button:hover { border-color: var(--accent); color: var(--accent); }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button.primary:hover { color: #fff; opacity: 0.9; }
+  button:focus-visible, textarea:focus-visible, iframe:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .workspace { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; height: max(560px, calc(100vh - 220px)); }
+  .col { display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+  .col > .pane { flex: 1 1 0; min-height: 0; }
+  .col.outputs > .pane:first-child { flex-grow: 2; }
+  .pane { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .pane-head { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  .pane-head button { padding: 2px 10px; font-size: 0.75rem; text-transform: none; letter-spacing: 0; }
+  textarea { flex: 1; min-height: 0; width: 100%; resize: none; border: 0; background: var(--code-bg); color: var(--code-text); padding: 12px; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.85rem; line-height: 1.5; tab-size: 2; }
+  iframe { flex: 1; min-height: 0; width: 100%; border: 0; background: #fff; }
+  #console { flex: 1; min-height: 0; overflow-y: auto; margin: 0; padding: 8px 12px; background: var(--code-bg); color: var(--ok); font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.85rem; }
+  #console:empty::before { content: "Nothing logged yet. Try console.log(\"hello\") in the JavaScript box."; color: var(--muted); }
+  #console .line { white-space: pre-wrap; word-break: break-word; padding: 2px 0; border-bottom: 1px solid #ffffff10; }
+  #console .warn { color: var(--warn); }
+  #console .error { color: var(--error); }
+  footer { text-align: center; color: var(--muted); padding: 16px 16px 48px; font-size: 0.9rem; }
+  @media (max-width: 900px) {
+    .workspace { grid-template-columns: 1fr; height: auto; }
+    .col > .pane { flex: none; height: 260px; }
+    .col.outputs > .pane:first-child { height: 320px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <nav class="series" aria-label="Tutorial series">
+    <a href="index.html">1. HTML basics</a>
+    <a href="css.html">2. CSS</a>
+    <a href="advanced.html">3. Advanced HTML</a>
+    <a href="javascript.html">4. JavaScript</a>
+    <a href="sandbox.html" aria-current="page">5. Sandbox</a><a href="cheatsheet.html">Cheat sheet</a>
+  </nav>
+  <h1>Sandbox</h1>
+  <p>Write HTML, CSS and JavaScript, and see the page and console update as you type.</p>
+</header>
+
+<main>
+  <div class="toolbar">
+    <button id="run" class="primary" type="button">Run</button>
+    <button id="reset" type="button">Reset to starter</button>
+    <span class="spacer"></span>
+    <span class="status" id="status">Runs automatically as you type</span>
+  </div>
+
+  <div class="workspace">
+    <div class="col editors">
+    <div class="pane">
+      <div class="pane-head"><span>HTML</span></div>
+      <textarea id="html" spellcheck="false" aria-label="HTML editor"></textarea>
+    </div>
+    <div class="pane">
+      <div class="pane-head"><span>CSS</span></div>
+      <textarea id="css" spellcheck="false" aria-label="CSS editor"></textarea>
+    </div>
+    <div class="pane">
+      <div class="pane-head"><span>JavaScript</span></div>
+      <textarea id="js" spellcheck="false" aria-label="JavaScript editor"></textarea>
+    </div>
+    </div>
+
+    <div class="col outputs">
+    <div class="pane">
+      <div class="pane-head"><span>Result</span></div>
+      <iframe id="preview" title="Rendered page" sandbox="allow-scripts allow-forms allow-modals"></iframe>
+    </div>
+    <div class="pane">
+      <div class="pane-head"><span>Console</span><button id="clear" type="button">Clear</button></div>
+      <div id="console" role="log" aria-live="polite"></div>
+    </div>
+    </div>
+  </div>
+</main>
+
+<footer>Your code is saved in this browser only. Nothing is sent anywhere.</footer>
+
+<script>
+  const STORAGE_KEY = 'html-tutorial-sandbox';
+  const STARTER = {
+    html: '<h1>Click counter</h1>\n<button id="btn">Clicked 0 times</button>\n<p id="msg"></p>',
+    css: 'body {\n  font-family: system-ui, sans-serif;\n  padding: 16px;\n}\n\nh1 {\n  color: #3b5bdb;\n}\n\nbutton {\n  padding: 8px 16px;\n  font-size: 16px;\n}',
+    js: 'let count = 0;\nconst btn = document.querySelector("#btn");\nconst msg = document.querySelector("#msg");\n\nbtn.addEventListener("click", () => {\n  count += 1;\n  btn.textContent = `Clicked ${count} times`;\n  msg.textContent = count >= 5 ? "Nice clicking!" : "";\n  console.log("count is", count);\n});\n\nconsole.log("Ready");',
+  };
+
+  const SHIM = `<script>
+    (() => {
+      const fmt = (v) => {
+        if (v instanceof Error) return v.message;
+        if (typeof v === 'object' && v !== null) {
+          try { return JSON.stringify(v); } catch { return String(v); }
+        }
+        return String(v);
+      };
+      const send = (level, args) => parent.postMessage({ source: 'sandbox', level, text: args.map(fmt).join(' ') }, '*');
+      ['log', 'info', 'warn', 'error'].forEach((level) => {
+        console[level] = (...args) => send(level, args);
+      });
+      window.addEventListener('error', (e) => send('error', [e.message]));
+      window.addEventListener('unhandledrejection', (e) => send('error', ['Unhandled promise rejection: ' + fmt(e.reason)]));
+    })();
+  <\/script>`;
+
+  const editors = {
+    html: document.getElementById('html'),
+    css: document.getElementById('css'),
+    js: document.getElementById('js'),
+  };
+  const frame = document.getElementById('preview');
+  const consoleEl = document.getElementById('console');
+  const statusEl = document.getElementById('status');
+
+  const load = () => {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) ?? STARTER;
+    } catch {
+      return STARTER;
+    }
+  };
+
+  const save = () => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(read()));
+    } catch {
+      statusEl.textContent = 'Could not save in this browser';
+    }
+  };
+
+  const read = () => ({ html: editors.html.value, css: editors.css.value, js: editors.js.value });
+
+  const run = () => {
+    const { html, css, js } = read();
+    consoleEl.replaceChildren();
+    const safeJs = js.replace(/<\/script/gi, '<\\/script');
+    frame.srcdoc =
+      '<!DOCTYPE html><html><head><meta charset="UTF-8"><style>' + css + '</style></head><body>' +
+      html + SHIM + '<script>' + safeJs + '<\/script></body></html>';
+    save();
+  };
+
+  let timer;
+  const schedule = () => {
+    clearTimeout(timer);
+    timer = setTimeout(run, 400);
+  };
+
+  window.addEventListener('message', (event) => {
+    const data = event.data;
+    if (event.source !== frame.contentWindow || !data || data.source !== 'sandbox') return;
+    const line = document.createElement('div');
+    line.className = 'line ' + data.level;
+    line.textContent = data.text;
+    consoleEl.appendChild(line);
+    consoleEl.scrollTop = consoleEl.scrollHeight;
+  });
+
+  Object.values(editors).forEach((editor) => {
+    editor.addEventListener('input', schedule);
+    editor.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      e.preventDefault();
+      editor.setRangeText('  ', editor.selectionStart, editor.selectionEnd, 'end');
+      schedule();
+    });
+  });
+
+  document.getElementById('run').addEventListener('click', run);
+  document.getElementById('clear').addEventListener('click', () => consoleEl.replaceChildren());
+  document.getElementById('reset').addEventListener('click', () => {
+    if (!confirm('Replace your code with the starter example?')) return;
+    Object.entries(STARTER).forEach(([key, value]) => { editors[key].value = value; });
+    run();
+  });
+
+  const initial = load();
+  Object.entries(initial).forEach(([key, value]) => { editors[key].value = value; });
+  run();
+</script>
+</body>
+</html>

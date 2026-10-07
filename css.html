@@ -58,15 +58,16 @@
     section { padding: 20px; }
   }
 </style>
+<link rel="stylesheet" href="exercises.css">
 </head>
 <body data-console="false">
 <header>
-<nav class="series" aria-label="Tutorial series"><a href="index.html">1. HTML basics</a><a href="css.html" aria-current="page">2. CSS</a><a href="advanced.html">3. Advanced HTML</a><a href="javascript.html">4. JavaScript</a></nav>
+<nav class="series" aria-label="Tutorial series"><a href="index.html">1. HTML basics</a><a href="css.html" aria-current="page">2. CSS</a><a href="advanced.html">3. Advanced HTML</a><a href="javascript.html">4. JavaScript</a><a href="sandbox.html">5. Sandbox</a><a href="cheatsheet.html">Cheat sheet</a></nav>
 <h1>Learn CSS</h1>
 <p>Make your HTML look good. Edit the code in each box and watch the page restyle itself.</p>
 </header>
 <div class="layout">
-<nav class="toc" aria-label="Tutorial sections"><ol><li><a href="#what">1. What is CSS?</a></li><li><a href="#text">2. Colours and text</a></li><li><a href="#box">3. The box model</a></li><li><a href="#selectors">4. Selectors</a></li><li><a href="#flexbox">5. Flexbox layout</a></li><li><a href="#grid">6. Grid layout</a></li><li><a href="#responsive">7. Responsive design</a></li><li><a href="#next">8. Next steps</a></li></ol></nav>
+<nav class="toc" aria-label="Tutorial sections"><ol><li><a href="#what">1. What is CSS?</a></li><li><a href="#text">2. Colours and text</a></li><li><a href="#box">3. The box model</a></li><li><a href="#selectors">4. Selectors</a></li><li><a href="#flexbox">5. Flexbox layout</a></li><li><a href="#grid">6. Grid layout</a></li><li><a href="#responsive">7. Responsive design</a></li><li><a href="#exercises">8. Exercises</a></li><li><a href="#next">9. Next steps</a></li></ol></nav>
 <main><section id="what"><h2><span class="num">1</span>What is CSS?</h2><p>CSS (Cascading Style Sheets) controls how HTML looks: colours, fonts, spacing and layout. A CSS rule has a <strong>selector</strong> (what to style) and <strong>declarations</strong> (how to style it), each written as <code class="inline">property: value;</code>.</p><p>CSS usually lives in a <code class="inline">&lt;style&gt;</code> element in the <code class="inline">&lt;head&gt;</code>, or in a separate <code class="inline">.css</code> file linked with <code class="inline">&lt;link rel=&quot;stylesheet&quot;&gt;</code>. These examples use <code class="inline">&lt;style&gt;</code> so everything stays in one box.</p><div class="playground"><div><div class="pane-label">HTML + CSS</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;style&gt;
   h1 {
     color: darkorange;
@@ -187,7 +188,7 @@
   }
 &lt;/style&gt;
 
-&lt;div class=&quot;panel&quot;&gt;Responsive panel&lt;/div&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip">Design for small screens first, then add <code class="inline">min-width</code> queries for larger ones. It is called <strong>mobile first</strong> and usually produces simpler CSS.</div></section><section id="next"><h2><span class="num">8</span>Next steps</h2><p>A quick reference of what you have covered, and where to go next.</p><table class="ref"><thead><tr><th>Property</th><th>What it does</th></tr></thead><tbody><tr><td><code class="inline">color</code>, <code class="inline">background</code></td><td>Text and background colour</td></tr><tr><td><code class="inline">font-family</code>, <code class="inline">font-size</code></td><td>Typeface and size</td></tr><tr><td><code class="inline">margin</code>, <code class="inline">padding</code>, <code class="inline">border</code></td><td>Spacing around and inside boxes</td></tr><tr><td><code class="inline">display: flex</code></td><td>One-dimensional layout</td></tr><tr><td><code class="inline">display: grid</code></td><td>Two-dimensional layout</td></tr><tr><td><code class="inline">@media</code></td><td>Styles that depend on screen size</td></tr></tbody></table><p>Next, page 3 returns to HTML for the more advanced elements. After that, JavaScript adds behaviour. For deeper CSS, the <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics" target="_blank" rel="noopener">MDN Styling basics</a> guide is a good free next stop.</p></section></main>
+&lt;div class=&quot;panel&quot;&gt;Responsive panel&lt;/div&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip">Design for small screens first, then add <code class="inline">min-width</code> queries for larger ones. It is called <strong>mobile first</strong> and usually produces simpler CSS.</div></section><section id="exercises" data-page="css"><h2><span class="num">8</span>Exercises</h2><p>Put it into practice. Edit the code, then press <strong>Check my answer</strong>. Your progress is saved in this browser.</p><p class="progress" id="ex-progress"></p><div id="ex-list"></div></section><section id="next"><h2><span class="num">9</span>Next steps</h2><p>A quick reference of what you have covered, and where to go next.</p><table class="ref"><thead><tr><th>Property</th><th>What it does</th></tr></thead><tbody><tr><td><code class="inline">color</code>, <code class="inline">background</code></td><td>Text and background colour</td></tr><tr><td><code class="inline">font-family</code>, <code class="inline">font-size</code></td><td>Typeface and size</td></tr><tr><td><code class="inline">margin</code>, <code class="inline">padding</code>, <code class="inline">border</code></td><td>Spacing around and inside boxes</td></tr><tr><td><code class="inline">display: flex</code></td><td>One-dimensional layout</td></tr><tr><td><code class="inline">display: grid</code></td><td>Two-dimensional layout</td></tr><tr><td><code class="inline">@media</code></td><td>Styles that depend on screen size</td></tr></tbody></table><p>Next, page 3 returns to HTML for the more advanced elements. After that, JavaScript adds behaviour. For deeper CSS, the <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics" target="_blank" rel="noopener">MDN Styling basics</a> guide is a good free next stop.</p></section></main>
 </div>
 <div class="pager"><a href="index.html">&larr; HTML basics</a><a class="primary" href="advanced.html">Next: Advanced HTML &rarr;</a></div>
 <footer>Edit any box above to experiment. Nothing you type is saved or sent anywhere.</footer>
@@ -248,5 +249,7 @@
   );
   document.querySelectorAll('section').forEach((s) => observer.observe(s));
 </script>
+<script src="exercises-data.js"></script>
+<script src="exercises.js"></script>
 </body>
 </html>

@@ -58,15 +58,16 @@
     section { padding: 20px; }
   }
 </style>
+<link rel="stylesheet" href="exercises.css">
 </head>
 <body data-console="false">
 <header>
-<nav class="series" aria-label="Tutorial series"><a href="index.html">1. HTML basics</a><a href="css.html">2. CSS</a><a href="advanced.html" aria-current="page">3. Advanced HTML</a><a href="javascript.html">4. JavaScript</a></nav>
+<nav class="series" aria-label="Tutorial series"><a href="index.html">1. HTML basics</a><a href="css.html">2. CSS</a><a href="advanced.html" aria-current="page">3. Advanced HTML</a><a href="javascript.html">4. JavaScript</a><a href="sandbox.html">5. Sandbox</a><a href="cheatsheet.html">Cheat sheet</a></nav>
 <h1>Advanced HTML</h1>
 <p>Semantic structure, accessibility, richer forms and built-in interactive elements.</p>
 </header>
 <div class="layout">
-<nav class="toc" aria-label="Tutorial sections"><ol><li><a href="#semantic">1. Semantic layout</a></li><li><a href="#a11y">2. Accessibility basics</a></li><li><a href="#forms">3. Forms in depth</a></li><li><a href="#media">4. Figures and media</a></li><li><a href="#interactive">5. Built-in interactive elements</a></li><li><a href="#head">6. Metadata and SEO</a></li><li><a href="#next">7. Next steps</a></li></ol></nav>
+<nav class="toc" aria-label="Tutorial sections"><ol><li><a href="#semantic">1. Semantic layout</a></li><li><a href="#a11y">2. Accessibility basics</a></li><li><a href="#forms">3. Forms in depth</a></li><li><a href="#media">4. Figures and media</a></li><li><a href="#interactive">5. Built-in interactive elements</a></li><li><a href="#head">6. Metadata and SEO</a></li><li><a href="#exercises">7. Exercises</a></li><li><a href="#next">8. Next steps</a></li></ol></nav>
 <main><section id="semantic"><h2><span class="num">1</span>Semantic layout</h2><p>A page built only from <code class="inline">&lt;div&gt;</code> elements means nothing to a screen reader or search engine. Semantic elements describe the role of each region: <code class="inline">&lt;header&gt;</code>, <code class="inline">&lt;nav&gt;</code>, <code class="inline">&lt;main&gt;</code>, <code class="inline">&lt;article&gt;</code>, <code class="inline">&lt;section&gt;</code>, <code class="inline">&lt;aside&gt;</code> and <code class="inline">&lt;footer&gt;</code>.</p><p>The editor below adds a little CSS only so you can see the regions. The meaning comes from the tags themselves.</p><div class="playground"><div><div class="pane-label">HTML</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;style&gt;
   body &gt; * { border: 1px dashed #888; padding: 6px; margin: 4px 0; }
   header { background: #e7ecff; }
@@ -149,7 +150,7 @@
   &lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot;&gt;
   &lt;meta property=&quot;og:title&quot; content=&quot;Title for social sharing&quot;&gt;
   &lt;meta property=&quot;og:image&quot; content=&quot;https://example.com/preview.png&quot;&gt;
-&lt;/head&gt;</code></pre><div class="tip">Every page should have a unique <code class="inline">&lt;title&gt;</code> and <code class="inline">description</code>. Together with good headings and semantic HTML, that covers most of the basics of on-page SEO.</div></section><section id="next"><h2><span class="num">7</span>Next steps</h2><p>A summary of the page, then on to the last topic.</p><table class="ref"><thead><tr><th>Topic</th><th>Remember</th></tr></thead><tbody><tr><td>Semantic elements</td><td>Use tags that describe meaning, not just appearance</td></tr><tr><td>Accessibility</td><td>Native elements first, <code class="inline">alt</code> text, labels, logical headings</td></tr><tr><td>Forms</td><td>Right input <code class="inline">type</code>, validation attributes, <code class="inline">fieldset</code> and <code class="inline">legend</code></td></tr><tr><td>Interactive elements</td><td><code class="inline">details</code>, <code class="inline">progress</code>, <code class="inline">meter</code> and <code class="inline">dialog</code></td></tr><tr><td>Metadata</td><td>Unique <code class="inline">title</code> and <code class="inline">description</code> on every page</td></tr></tbody></table><p>You can test your pages with the free <a href="https://validator.w3.org/" target="_blank" rel="noopener">W3C Markup Validator</a> and your browser's Lighthouse accessibility audit. Next up: JavaScript.</p></section></main>
+&lt;/head&gt;</code></pre><div class="tip">Every page should have a unique <code class="inline">&lt;title&gt;</code> and <code class="inline">description</code>. Together with good headings and semantic HTML, that covers most of the basics of on-page SEO.</div></section><section id="exercises" data-page="advanced"><h2><span class="num">7</span>Exercises</h2><p>Put it into practice. Edit the code, then press <strong>Check my answer</strong>. Your progress is saved in this browser.</p><p class="progress" id="ex-progress"></p><div id="ex-list"></div></section><section id="next"><h2><span class="num">8</span>Next steps</h2><p>A summary of the page, then on to the last topic.</p><table class="ref"><thead><tr><th>Topic</th><th>Remember</th></tr></thead><tbody><tr><td>Semantic elements</td><td>Use tags that describe meaning, not just appearance</td></tr><tr><td>Accessibility</td><td>Native elements first, <code class="inline">alt</code> text, labels, logical headings</td></tr><tr><td>Forms</td><td>Right input <code class="inline">type</code>, validation attributes, <code class="inline">fieldset</code> and <code class="inline">legend</code></td></tr><tr><td>Interactive elements</td><td><code class="inline">details</code>, <code class="inline">progress</code>, <code class="inline">meter</code> and <code class="inline">dialog</code></td></tr><tr><td>Metadata</td><td>Unique <code class="inline">title</code> and <code class="inline">description</code> on every page</td></tr></tbody></table><p>You can test your pages with the free <a href="https://validator.w3.org/" target="_blank" rel="noopener">W3C Markup Validator</a> and your browser's Lighthouse accessibility audit. Next up: JavaScript.</p></section></main>
 </div>
 <div class="pager"><a href="css.html">&larr; CSS</a><a class="primary" href="javascript.html">Next: JavaScript &rarr;</a></div>
 <footer>Edit any box above to experiment. Nothing you type is saved or sent anywhere.</footer>
@@ -210,5 +211,7 @@
   );
   document.querySelectorAll('section').forEach((s) => observer.observe(s));
 </script>
+<script src="exercises-data.js"></script>
+<script src="exercises.js"></script>
 </body>
 </html>
