@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learn CSS</title>
+<style>
+  :root {
+    --bg: #f7f8fa; --surface: #ffffff; --text: #1d2433; --muted: #5b6475;
+    --accent: #3b5bdb; --accent-soft: #e7ecff; --border: #dde1ea; --code-bg: #12151f; --code-text: #e6e9f2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1219; --surface: #181c27; --text: #e6e9f2; --muted: #9aa3b5;
+      --accent: #8da2ff; --accent-soft: #232a45; --border: #2a3042; --code-bg: #0b0d13;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  header { padding: 40px 16px 36px; text-align: center; background: var(--accent-soft); border-bottom: 1px solid var(--border); }
+  header h1 { margin: 0 0 8px; font-size: clamp(2rem, 6vw, 3rem); }
+  header p { margin: 0 auto; max-width: 560px; color: var(--muted); }
+  .series { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 28px; }
+  .series a { padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); text-decoration: none; font-size: 0.9rem; }
+  .series a:hover { color: var(--accent); border-color: var(--accent); }
+  .series a[aria-current="page"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 32px; max-width: 1060px; margin: 0 auto; padding: 32px 16px 32px; }
+  nav.toc { position: sticky; top: 24px; align-self: start; }
+  nav.toc ol { list-style: none; margin: 0; padding: 0; }
+  nav.toc a { display: block; padding: 6px 12px; border-radius: 8px; color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+  nav.toc a:hover, nav.toc a.active { background: var(--accent-soft); color: var(--accent); }
+  section { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px; margin-bottom: 24px; }
+  section h2 { margin-top: 0; }
+  section h2 .num { display: inline-block; width: 32px; height: 32px; line-height: 32px; text-align: center; border-radius: 50%; background: var(--accent); color: #fff; font-size: 0.95rem; margin-right: 10px; vertical-align: middle; }
+  code.inline { background: var(--accent-soft); color: var(--accent); padding: 2px 6px; border-radius: 5px; font-size: 0.9em; }
+  .tip { border-left: 4px solid var(--accent); background: var(--accent-soft); padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 16px 0; }
+  .playground { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  .pane-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 4px; }
+  textarea, pre.static { width: 100%; background: var(--code-bg); color: var(--code-text); border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.85rem; line-height: 1.5; tab-size: 2; }
+  textarea { height: 280px; resize: vertical; }
+  pre.static { overflow-x: auto; margin: 16px 0 0; }
+  iframe { width: 100%; height: 280px; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
+  textarea:focus-visible, iframe:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button.reset { margin-top: 8px; background: none; border: 1px solid var(--border); color: var(--muted); padding: 4px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+  button.reset:hover { color: var(--accent); border-color: var(--accent); }
+  table.ref { border-collapse: collapse; width: 100%; margin-top: 12px; }
+  table.ref th, table.ref td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
+  table.ref th { background: var(--accent-soft); }
+  .pager { display: flex; justify-content: space-between; gap: 12px; max-width: 1060px; margin: 0 auto; padding: 0 16px 40px; }
+  .pager a { padding: 10px 18px; border-radius: 10px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-weight: 600; }
+  .pager a.primary { background: var(--accent); color: #fff; }
+  footer { text-align: center; color: var(--muted); padding: 0 16px 48px; }
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.toc { position: static; }
+    nav.toc ol { display: flex; flex-wrap: wrap; gap: 4px; }
+    .playground { grid-template-columns: 1fr; }
+    section { padding: 20px; }
+  }
+</style>
+</head>
+<body data-console="false">
+<header>
+<nav class="series" aria-label="Tutorial series"><a href="index.html">1. HTML basics</a><a href="css.html" aria-current="page">2. CSS</a><a href="advanced.html">3. Advanced HTML</a><a href="javascript.html">4. JavaScript</a></nav>
+<h1>Learn CSS</h1>
+<p>Make your HTML look good. Edit the code in each box and watch the page restyle itself.</p>
+</header>
+<div class="layout">
+<nav class="toc" aria-label="Tutorial sections"><ol><li><a href="#what">1. What is CSS?</a></li><li><a href="#text">2. Colours and text</a></li><li><a href="#box">3. The box model</a></li><li><a href="#selectors">4. Selectors</a></li><li><a href="#flexbox">5. Flexbox layout</a></li><li><a href="#grid">6. Grid layout</a></li><li><a href="#responsive">7. Responsive design</a></li><li><a href="#next">8. Next steps</a></li></ol></nav>
+<main><section id="what"><h2><span class="num">1</span>What is CSS?</h2><p>CSS (Cascading Style Sheets) controls how HTML looks: colours, fonts, spacing and layout. A CSS rule has a <strong>selector</strong> (what to style) and <strong>declarations</strong> (how to style it), each written as <code class="inline">property: value;</code>.</p><p>CSS usually lives in a <code class="inline">&lt;style&gt;</code> element in the <code class="inline">&lt;head&gt;</code>, or in a separate <code class="inline">.css</code> file linked with <code class="inline">&lt;link rel=&quot;stylesheet&quot;&gt;</code>. These examples use <code class="inline">&lt;style&gt;</code> so everything stays in one box.</p><div class="playground"><div><div class="pane-label">HTML + CSS</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;style&gt;
+  h1 {
+    color: darkorange;
+  }
+  p {
+    color: slategray;
+    font-size: 18px;
+  }
+&lt;/style&gt;
+
+&lt;h1&gt;Styled heading&lt;/h1&gt;
+&lt;p&gt;Every paragraph picks up the same style.&lt;/p&gt;
+&lt;p&gt;So does this one.&lt;/p&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip"><strong>Try it:</strong> change <code class="inline">darkorange</code> to <code class="inline">teal</code>, or any colour name you like.</div></section><section id="text"><h2><span class="num">2</span>Colours and text</h2><p>Colours can be names (<code class="inline">tomato</code>), hex codes (<code class="inline">#3b5bdb</code>) or <code class="inline">rgb()</code> values. Text is shaped with <code class="inline">font-family</code>, <code class="inline">font-size</code>, <code class="inline">font-weight</code>, <code class="inline">line-height</code> and <code class="inline">text-align</code>.</p><div class="playground"><div><div class="pane-label">HTML + CSS</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;style&gt;
+  body {
+    background: #f4f1ea;
+    font-family: Georgia, serif;
+    line-height: 1.7;
+  }
+  h1 {
+    color: #3b5bdb;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+  .lead {
+    font-size: 20px;
+    font-weight: bold;
+    color: #444;
+  }
+&lt;/style&gt;
+
+&lt;h1&gt;Readable text&lt;/h1&gt;
+&lt;p class=&quot;lead&quot;&gt;A generous line height makes paragraphs easier to read.&lt;/p&gt;
+&lt;p&gt;Notice how the whole page picked up the font from &lt;code&gt;body&lt;/code&gt;.&lt;/p&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip">Properties set on <code class="inline">body</code> are <strong>inherited</strong> by most elements inside it, so you rarely need to repeat font settings.</div></section><section id="box"><h2><span class="num">3</span>The box model</h2><p>Every element is a rectangular box made of four layers, from inside out: <strong>content</strong>, <code class="inline">padding</code>, <code class="inline">border</code> and <code class="inline">margin</code>. Understanding this is the key to spacing things properly.</p><p>Setting <code class="inline">box-sizing: border-box</code> makes <code class="inline">width</code> include padding and border, which is almost always what you want.</p><div class="playground"><div><div class="pane-label">HTML + CSS</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;style&gt;
+  * { box-sizing: border-box; }
+  .card {
+    width: 220px;
+    padding: 20px;
+    border: 3px solid #3b5bdb;
+    border-radius: 12px;
+    margin: 16px auto;
+    background: #eef1ff;
+  }
+&lt;/style&gt;
+
+&lt;div class=&quot;card&quot;&gt;Padding is space inside the border.&lt;/div&gt;
+&lt;div class=&quot;card&quot;&gt;Margin is space outside it.&lt;/div&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip"><strong>Challenge:</strong> change <code class="inline">margin: 16px auto</code> to <code class="inline">margin: 16px 0</code> and watch the cards move left.</div></section><section id="selectors"><h2><span class="num">4</span>Selectors</h2><p>Selectors pick which elements a rule applies to. The most common are element (<code class="inline">p</code>), class (<code class="inline">.note</code>), id (<code class="inline">#intro</code>), descendant (<code class="inline">nav a</code>) and pseudo-class (<code class="inline">a:hover</code>).</p><p>Prefer classes for styling. They are reusable and do not clash with each other the way ids can.</p><div class="playground"><div><div class="pane-label">HTML + CSS</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;style&gt;
+  p { color: #333; }
+  .note { background: #fff3bf; padding: 8px 12px; }
+  .note.warning { background: #ffe3e3; }
+  ul a { color: #3b5bdb; text-decoration: none; }
+  ul a:hover { text-decoration: underline; color: crimson; }
+&lt;/style&gt;
+
+&lt;p&gt;A normal paragraph.&lt;/p&gt;
+&lt;p class=&quot;note&quot;&gt;A highlighted note.&lt;/p&gt;
+&lt;p class=&quot;note warning&quot;&gt;A warning note (two classes).&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Hover over me&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#&quot;&gt;And me&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip">When two rules clash, the more <strong>specific</strong> selector wins. If specificity is equal, the later rule wins. That is the "cascade".</div></section><section id="flexbox"><h2><span class="num">5</span>Flexbox layout</h2><p>Flexbox lays items out in a row or column. Put <code class="inline">display: flex</code> on the parent, then control spacing with <code class="inline">justify-content</code> (main axis), <code class="inline">align-items</code> (cross axis) and <code class="inline">gap</code>.</p><div class="playground"><div><div class="pane-label">HTML + CSS</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;style&gt;
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: #eef1ff;
+    border-radius: 10px;
+  }
+  .box {
+    background: #3b5bdb;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
+  }
+  .box.tall { padding: 28px 18px; }
+&lt;/style&gt;
+
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;box&quot;&gt;One&lt;/div&gt;
+  &lt;div class=&quot;box tall&quot;&gt;Two&lt;/div&gt;
+  &lt;div class=&quot;box&quot;&gt;Three&lt;/div&gt;
+&lt;/div&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip"><strong>Try it:</strong> change <code class="inline">space-between</code> to <code class="inline">center</code>, then add <code class="inline">flex-direction: column;</code> to <code class="inline">.row</code>.</div></section><section id="grid"><h2><span class="num">6</span>Grid layout</h2><p>Grid handles two dimensions at once. Define columns with <code class="inline">grid-template-columns</code>, and the browser places children into the cells. The <code class="inline">fr</code> unit means "a fraction of the free space".</p><p>Rule of thumb: Flexbox for a single row or column, Grid when you need rows and columns together.</p><div class="playground"><div><div class="pane-label">HTML + CSS</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;style&gt;
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .grid div {
+    background: #8da2ff;
+    padding: 20px 0;
+    text-align: center;
+    border-radius: 8px;
+    color: #12151f;
+  }
+  .wide { grid-column: span 2; }
+&lt;/style&gt;
+
+&lt;div class=&quot;grid&quot;&gt;
+  &lt;div class=&quot;wide&quot;&gt;Spans two columns&lt;/div&gt;
+  &lt;div&gt;2&lt;/div&gt;
+  &lt;div&gt;3&lt;/div&gt;
+  &lt;div&gt;4&lt;/div&gt;
+  &lt;div&gt;5&lt;/div&gt;
+&lt;/div&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip"><strong>Challenge:</strong> change <code class="inline">repeat(3, 1fr)</code> to <code class="inline">1fr 2fr 1fr</code>.</div></section><section id="responsive"><h2><span class="num">7</span>Responsive design</h2><p>Pages should work on phones and desktops. First, make sure your HTML has <code class="inline">&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;</code>. Then use <strong>media queries</strong> to change styles at certain widths.</p><p>The preview below is narrow, so the query triggers straight away. Change <code class="inline">400px</code> to <code class="inline">200px</code> to see the other state.</p><div class="playground"><div><div class="pane-label">HTML + CSS</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;style&gt;
+  .panel {
+    padding: 20px;
+    background: #d3f9d8;
+    text-align: center;
+  }
+  @media (max-width: 400px) {
+    .panel {
+      background: #ffe3e3;
+    }
+    .panel::after {
+      content: &quot; (narrow layout)&quot;;
+    }
+  }
+&lt;/style&gt;
+
+&lt;div class=&quot;panel&quot;&gt;Responsive panel&lt;/div&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip">Design for small screens first, then add <code class="inline">min-width</code> queries for larger ones. It is called <strong>mobile first</strong> and usually produces simpler CSS.</div></section><section id="next"><h2><span class="num">8</span>Next steps</h2><p>A quick reference of what you have covered, and where to go next.</p><table class="ref"><thead><tr><th>Property</th><th>What it does</th></tr></thead><tbody><tr><td><code class="inline">color</code>, <code class="inline">background</code></td><td>Text and background colour</td></tr><tr><td><code class="inline">font-family</code>, <code class="inline">font-size</code></td><td>Typeface and size</td></tr><tr><td><code class="inline">margin</code>, <code class="inline">padding</code>, <code class="inline">border</code></td><td>Spacing around and inside boxes</td></tr><tr><td><code class="inline">display: flex</code></td><td>One-dimensional layout</td></tr><tr><td><code class="inline">display: grid</code></td><td>Two-dimensional layout</td></tr><tr><td><code class="inline">@media</code></td><td>Styles that depend on screen size</td></tr></tbody></table><p>Next, page 3 returns to HTML for the more advanced elements. After that, JavaScript adds behaviour. For deeper CSS, the <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics" target="_blank" rel="noopener">MDN Styling basics</a> guide is a good free next stop.</p></section></main>
+</div>
+<div class="pager"><a href="index.html">&larr; HTML basics</a><a class="primary" href="advanced.html">Next: Advanced HTML &rarr;</a></div>
+<footer>Edit any box above to experiment. Nothing you type is saved or sent anywhere.</footer>
+<script>
+  const CONSOLE_SHIM = `<script>
+    const lines = [];
+    const flush = () => {
+      if (!document.body) return;
+      let out = document.getElementById('__console');
+      if (!out) {
+        out = document.createElement('pre');
+        out.id = '__console';
+        out.style.cssText = 'background:#12151f;color:#9be9a8;padding:8px;margin:12px 0 0;border-radius:6px;font-size:12px;white-space:pre-wrap';
+        document.body.appendChild(out);
+      }
+      out.textContent = lines.join('\n');
+    };
+    console.log = (...args) => {
+      lines.push(args.map((a) => (typeof a === 'object' ? JSON.stringify(a) : String(a))).join(' '));
+      flush();
+    };
+    document.addEventListener('DOMContentLoaded', flush);
+  <\/script>`;
+  const BASE = '<style>body{font-family:system-ui,sans-serif;margin:12px;color:#1d2433}</style>';
+  const withConsole = document.body.dataset.console === 'true';
+
+  document.querySelectorAll('.playground').forEach((pg) => {
+    const editor = pg.querySelector('[data-editor]');
+    const frame = pg.querySelector('iframe');
+    const reset = pg.querySelector('.reset');
+    const original = editor.value;
+    const render = () => {
+      frame.srcdoc = BASE + (withConsole ? CONSOLE_SHIM : '') + editor.value;
+    };
+    editor.addEventListener('input', render);
+    editor.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      e.preventDefault();
+      editor.setRangeText('  ', editor.selectionStart, editor.selectionEnd, 'end');
+      render();
+    });
+    reset.addEventListener('click', () => {
+      editor.value = original;
+      render();
+    });
+    render();
+  });
+
+  const links = [...document.querySelectorAll('nav.toc a')];
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        links.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
+      });
+    },
+    { rootMargin: '-30% 0px -60% 0px' }
+  );
+  document.querySelectorAll('section').forEach((s) => observer.observe(s));
+</script>
+</body>
+</html>

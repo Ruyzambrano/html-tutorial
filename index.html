@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learn HTML</title>
+<style>
+  :root {
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --text: #1d2433;
+    --muted: #5b6475;
+    --accent: #3b5bdb;
+    --accent-soft: #e7ecff;
+    --border: #dde1ea;
+    --code-bg: #12151f;
+    --code-text: #e6e9f2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1219;
+      --surface: #181c27;
+      --text: #e6e9f2;
+      --muted: #9aa3b5;
+      --accent: #8da2ff;
+      --accent-soft: #232a45;
+      --border: #2a3042;
+      --code-bg: #0b0d13;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  header {
+    padding: 56px 16px 40px;
+    text-align: center;
+    background: var(--accent-soft);
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 { margin: 0 0 8px; font-size: clamp(2rem, 6vw, 3rem); }
+  header p { margin: 0 auto; max-width: 560px; color: var(--muted); }
+  .layout {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 32px;
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 32px 16px 80px;
+  }
+  nav.toc { position: sticky; top: 24px; align-self: start; }
+  nav.toc ol { list-style: none; margin: 0; padding: 0; }
+  nav.toc a {
+    display: block;
+    padding: 6px 12px;
+    border-radius: 8px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  nav a:hover, nav a.active { background: var(--accent-soft); color: var(--accent); }
+  section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 24px;
+  }
+  section h2 { margin-top: 0; }
+  section h2 .num {
+    display: inline-block;
+    width: 32px; height: 32px;
+    line-height: 32px;
+    text-align: center;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.95rem;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  code.inline {
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-size: 0.9em;
+  }
+  .tip {
+    border-left: 4px solid var(--accent);
+    background: var(--accent-soft);
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    margin: 16px 0;
+  }
+  .playground {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .pane-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  textarea {
+    width: 100%;
+    height: 220px;
+    resize: vertical;
+    background: var(--code-bg);
+    color: var(--code-text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    tab-size: 2;
+  }
+  textarea:focus-visible, iframe:focus-visible, button:focus-visible, a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  iframe {
+    width: 100%;
+    height: 220px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+  }
+  button.reset {
+    margin-top: 8px;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 4px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+  }
+  button.reset:hover { color: var(--accent); border-color: var(--accent); }
+  table.ref { border-collapse: collapse; width: 100%; margin-top: 12px; }
+  table.ref th, table.ref td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
+  table.ref th { background: var(--accent-soft); }
+  .series { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 28px; }
+  .series a { padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); text-decoration: none; font-size: 0.9rem; }
+  .series a:hover { color: var(--accent); border-color: var(--accent); }
+  .series a[aria-current="page"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .pager { display: flex; justify-content: flex-end; max-width: 1060px; margin: 0 auto; padding: 0 16px 40px; }
+  .pager a { padding: 10px 18px; border-radius: 10px; background: var(--accent); color: #fff; text-decoration: none; font-weight: 600; }
+  footer { text-align: center; color: var(--muted); padding: 0 16px 48px; }
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.toc { position: static; }
+    nav.toc ol { display: flex; flex-wrap: wrap; gap: 4px; }
+    .playground { grid-template-columns: 1fr; }
+    section { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="series" aria-label="Tutorial series">
+    <a href="index.html" aria-current="page">1. HTML basics</a>
+    <a href="css.html">2. CSS</a>
+    <a href="advanced.html">3. Advanced HTML</a>
+    <a href="javascript.html">4. JavaScript</a>
+  </nav>
+  <h1>Learn HTML</h1>
+  <p>A hands-on introduction for complete beginners. Edit the code in each box and watch the result change instantly.</p>
+</header>
+
+<div class="layout">
+  <nav class="toc" aria-label="Tutorial sections">
+    <ol>
+      <li><a href="#what">1. What is HTML?</a></li>
+      <li><a href="#structure">2. Page structure</a></li>
+      <li><a href="#text">3. Headings and text</a></li>
+      <li><a href="#links">4. Links and images</a></li>
+      <li><a href="#lists">5. Lists</a></li>
+      <li><a href="#tables">6. Tables</a></li>
+      <li><a href="#forms">7. Forms</a></li>
+      <li><a href="#next">8. Next steps</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <section id="what">
+      <h2><span class="num">1</span>What is HTML?</h2>
+      <p>HTML (HyperText Markup Language) is the language that gives web pages their structure. It tells the browser what each piece of content <em>is</em>: a heading, a paragraph, a link, an image.</p>
+      <p>You write HTML using <strong>elements</strong>. Most elements have an opening tag, some content, and a closing tag:</p>
+      <div class="playground">
+        <div>
+          <div class="pane-label">HTML</div>
+          <textarea data-editor spellcheck="false" aria-label="HTML editor">&lt;p&gt;Hello, world!&lt;/p&gt;</textarea>
+          <button class="reset" type="button">Reset</button>
+        </div>
+        <div>
+          <div class="pane-label">Result</div>
+          <iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe>
+        </div>
+      </div>
+      <div class="tip"><strong>Try it:</strong> change "Hello, world!" to your own name.</div>
+    </section>
+
+    <section id="structure">
+      <h2><span class="num">2</span>Page structure</h2>
+      <p>Every HTML page follows the same skeleton. The <code class="inline">&lt;head&gt;</code> holds information about the page. The <code class="inline">&lt;body&gt;</code> holds everything visitors actually see.</p>
+      <div class="playground">
+        <div>
+          <div class="pane-label">HTML</div>
+          <textarea data-editor spellcheck="false" aria-label="HTML editor">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My first page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Welcome&lt;/h1&gt;
+    &lt;p&gt;This is the visible part.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</textarea>
+          <button class="reset" type="button">Reset</button>
+        </div>
+        <div>
+          <div class="pane-label">Result</div>
+          <iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe>
+        </div>
+      </div>
+      <div class="tip">The text inside <code class="inline">&lt;title&gt;</code> appears on the browser tab, not on the page itself.</div>
+    </section>
+
+    <section id="text">
+      <h2><span class="num">3</span>Headings and text</h2>
+      <p>Headings run from <code class="inline">&lt;h1&gt;</code> (most important) to <code class="inline">&lt;h6&gt;</code>. Use <code class="inline">&lt;p&gt;</code> for paragraphs, <code class="inline">&lt;strong&gt;</code> for bold importance and <code class="inline">&lt;em&gt;</code> for emphasis.</p>
+      <div class="playground">
+        <div>
+          <div class="pane-label">HTML</div>
+          <textarea data-editor spellcheck="false" aria-label="HTML editor">&lt;h1&gt;Main title&lt;/h1&gt;
+&lt;h2&gt;A subheading&lt;/h2&gt;
+&lt;p&gt;This is a paragraph with &lt;strong&gt;important&lt;/strong&gt; and &lt;em&gt;emphasised&lt;/em&gt; text.&lt;/p&gt;
+&lt;p&gt;Use a line break&lt;br&gt;to start a new line.&lt;/p&gt;</textarea>
+          <button class="reset" type="button">Reset</button>
+        </div>
+        <div>
+          <div class="pane-label">Result</div>
+          <iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe>
+        </div>
+      </div>
+      <div class="tip">Pick headings for meaning, not size. Use one <code class="inline">&lt;h1&gt;</code> per page and step down in order.</div>
+    </section>
+
+    <section id="links">
+      <h2><span class="num">4</span>Links and images</h2>
+      <p>The <code class="inline">&lt;a&gt;</code> element creates a link using the <code class="inline">href</code> attribute. The <code class="inline">&lt;img&gt;</code> element shows an image using <code class="inline">src</code>, and <code class="inline">alt</code> describes it for people who cannot see it.</p>
+      <div class="playground">
+        <div>
+          <div class="pane-label">HTML</div>
+          <textarea data-editor spellcheck="false" aria-label="HTML editor">&lt;p&gt;Visit &lt;a href="https://developer.mozilla.org" target="_blank" rel="noopener"&gt;MDN Web Docs&lt;/a&gt; to learn more.&lt;/p&gt;
+
+&lt;img
+  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='100'%3E%3Crect width='200' height='100' fill='%233b5bdb'/%3E%3Ctext x='100' y='56' fill='white' font-size='20' text-anchor='middle'%3EHello%3C/text%3E%3C/svg%3E"
+  alt="A blue rectangle that says Hello"
+  width="200"&gt;</textarea>
+          <button class="reset" type="button">Reset</button>
+        </div>
+        <div>
+          <div class="pane-label">Result</div>
+          <iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe>
+        </div>
+      </div>
+      <div class="tip">Attributes live inside the opening tag as <code class="inline">name="value"</code> pairs.</div>
+    </section>
+
+    <section id="lists">
+      <h2><span class="num">5</span>Lists</h2>
+      <p>Use <code class="inline">&lt;ul&gt;</code> for bullet lists and <code class="inline">&lt;ol&gt;</code> for numbered ones. Each item goes in an <code class="inline">&lt;li&gt;</code>.</p>
+      <div class="playground">
+        <div>
+          <div class="pane-label">HTML</div>
+          <textarea data-editor spellcheck="false" aria-label="HTML editor">&lt;h3&gt;Shopping&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Bread&lt;/li&gt;
+  &lt;li&gt;Milk&lt;/li&gt;
+  &lt;li&gt;Eggs&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;Steps&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;Write HTML&lt;/li&gt;
+  &lt;li&gt;Open in a browser&lt;/li&gt;
+  &lt;li&gt;Admire it&lt;/li&gt;
+&lt;/ol&gt;</textarea>
+          <button class="reset" type="button">Reset</button>
+        </div>
+        <div>
+          <div class="pane-label">Result</div>
+          <iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <section id="tables">
+      <h2><span class="num">6</span>Tables</h2>
+      <p>Tables are for tabular data, not page layout. A row is <code class="inline">&lt;tr&gt;</code>, a header cell is <code class="inline">&lt;th&gt;</code> and a data cell is <code class="inline">&lt;td&gt;</code>.</p>
+      <div class="playground">
+        <div>
+          <div class="pane-label">HTML</div>
+          <textarea data-editor spellcheck="false" aria-label="HTML editor">&lt;table border="1" cellpadding="6"&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;Language&lt;/th&gt;&lt;th&gt;Purpose&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;HTML&lt;/td&gt;&lt;td&gt;Structure&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;CSS&lt;/td&gt;&lt;td&gt;Style&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;JavaScript&lt;/td&gt;&lt;td&gt;Behaviour&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</textarea>
+          <button class="reset" type="button">Reset</button>
+        </div>
+        <div>
+          <div class="pane-label">Result</div>
+          <iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe>
+        </div>
+      </div>
+      <div class="tip"><strong>Challenge:</strong> add a fourth row for a language you know.</div>
+    </section>
+
+    <section id="forms">
+      <h2><span class="num">7</span>Forms</h2>
+      <p>Forms collect input. Pair every <code class="inline">&lt;input&gt;</code> with a <code class="inline">&lt;label&gt;</code>, linking them with matching <code class="inline">for</code> and <code class="inline">id</code> values.</p>
+      <div class="playground">
+        <div>
+          <div class="pane-label">HTML</div>
+          <textarea data-editor spellcheck="false" aria-label="HTML editor">&lt;form onsubmit="return false"&gt;
+  &lt;p&gt;
+    &lt;label for="name"&gt;Name&lt;/label&gt;&lt;br&gt;
+    &lt;input type="text" id="name" required&gt;
+  &lt;/p&gt;
+  &lt;p&gt;
+    &lt;label for="email"&gt;Email&lt;/label&gt;&lt;br&gt;
+    &lt;input type="email" id="email" required&gt;
+  &lt;/p&gt;
+  &lt;p&gt;
+    &lt;label for="role"&gt;Role&lt;/label&gt;&lt;br&gt;
+    &lt;select id="role"&gt;
+      &lt;option&gt;Learner&lt;/option&gt;
+      &lt;option&gt;Coach&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/p&gt;
+  &lt;button type="submit"&gt;Send&lt;/button&gt;
+&lt;/form&gt;</textarea>
+          <button class="reset" type="button">Reset</button>
+        </div>
+        <div>
+          <div class="pane-label">Result</div>
+          <iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe>
+        </div>
+      </div>
+      <div class="tip">Try clicking Send with the email field empty. The browser validates it for you.</div>
+    </section>
+
+    <section id="next">
+      <h2><span class="num">8</span>Next steps</h2>
+      <p>You now know the building blocks. Here is a quick reference and where to go next.</p>
+      <table class="ref">
+        <thead><tr><th>Element</th><th>Use it for</th></tr></thead>
+        <tbody>
+          <tr><td><code class="inline">&lt;h1&gt;</code> to <code class="inline">&lt;h6&gt;</code></td><td>Headings</td></tr>
+          <tr><td><code class="inline">&lt;p&gt;</code></td><td>Paragraphs</td></tr>
+          <tr><td><code class="inline">&lt;a&gt;</code></td><td>Links</td></tr>
+          <tr><td><code class="inline">&lt;img&gt;</code></td><td>Images</td></tr>
+          <tr><td><code class="inline">&lt;ul&gt;</code>, <code class="inline">&lt;ol&gt;</code>, <code class="inline">&lt;li&gt;</code></td><td>Lists</td></tr>
+          <tr><td><code class="inline">&lt;table&gt;</code></td><td>Tabular data</td></tr>
+          <tr><td><code class="inline">&lt;form&gt;</code>, <code class="inline">&lt;input&gt;</code></td><td>User input</td></tr>
+        </tbody>
+      </table>
+      <p>HTML on its own looks plain. The usual next step is <strong>CSS</strong> for styling, then <strong>JavaScript</strong> for behaviour. The <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development" target="_blank" rel="noopener">MDN Learn web development</a> course is a good free place to continue.</p>
+    </section>
+  </main>
+</div>
+
+<div class="pager"><a href="css.html">Next: CSS &rarr;</a></div>
+
+<footer>Edit any box above to experiment. Nothing you type is saved or sent anywhere.</footer>
+
+<script>
+  document.querySelectorAll('.playground').forEach((pg) => {
+    const editor = pg.querySelector('[data-editor]');
+    const frame = pg.querySelector('iframe');
+    const reset = pg.querySelector('.reset');
+    const original = editor.value;
+
+    const render = () => {
+      frame.srcdoc =
+        '<style>body{font-family:system-ui,sans-serif;margin:12px;color:#1d2433}</style>' + editor.value;
+    };
+
+    editor.addEventListener('input', render);
+    editor.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      e.preventDefault();
+      const { selectionStart: s, selectionEnd: en } = editor;
+      editor.setRangeText('  ', s, en, 'end');
+      render();
+    });
+    reset.addEventListener('click', () => {
+      editor.value = original;
+      render();
+    });
+    render();
+  });
+
+  const links = [...document.querySelectorAll('nav.toc a')];
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        links.forEach((a) =>
+          a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id)
+        );
+      });
+    },
+    { rootMargin: '-30% 0px -60% 0px' }
+  );
+  document.querySelectorAll('section').forEach((s) => observer.observe(s));
+</script>
+</body>
+</html>

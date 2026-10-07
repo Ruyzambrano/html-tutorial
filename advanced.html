@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Advanced HTML</title>
+<style>
+  :root {
+    --bg: #f7f8fa; --surface: #ffffff; --text: #1d2433; --muted: #5b6475;
+    --accent: #3b5bdb; --accent-soft: #e7ecff; --border: #dde1ea; --code-bg: #12151f; --code-text: #e6e9f2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1219; --surface: #181c27; --text: #e6e9f2; --muted: #9aa3b5;
+      --accent: #8da2ff; --accent-soft: #232a45; --border: #2a3042; --code-bg: #0b0d13;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  header { padding: 40px 16px 36px; text-align: center; background: var(--accent-soft); border-bottom: 1px solid var(--border); }
+  header h1 { margin: 0 0 8px; font-size: clamp(2rem, 6vw, 3rem); }
+  header p { margin: 0 auto; max-width: 560px; color: var(--muted); }
+  .series { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 28px; }
+  .series a { padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); text-decoration: none; font-size: 0.9rem; }
+  .series a:hover { color: var(--accent); border-color: var(--accent); }
+  .series a[aria-current="page"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 32px; max-width: 1060px; margin: 0 auto; padding: 32px 16px 32px; }
+  nav.toc { position: sticky; top: 24px; align-self: start; }
+  nav.toc ol { list-style: none; margin: 0; padding: 0; }
+  nav.toc a { display: block; padding: 6px 12px; border-radius: 8px; color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+  nav.toc a:hover, nav.toc a.active { background: var(--accent-soft); color: var(--accent); }
+  section { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px; margin-bottom: 24px; }
+  section h2 { margin-top: 0; }
+  section h2 .num { display: inline-block; width: 32px; height: 32px; line-height: 32px; text-align: center; border-radius: 50%; background: var(--accent); color: #fff; font-size: 0.95rem; margin-right: 10px; vertical-align: middle; }
+  code.inline { background: var(--accent-soft); color: var(--accent); padding: 2px 6px; border-radius: 5px; font-size: 0.9em; }
+  .tip { border-left: 4px solid var(--accent); background: var(--accent-soft); padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 16px 0; }
+  .playground { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  .pane-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 4px; }
+  textarea, pre.static { width: 100%; background: var(--code-bg); color: var(--code-text); border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.85rem; line-height: 1.5; tab-size: 2; }
+  textarea { height: 280px; resize: vertical; }
+  pre.static { overflow-x: auto; margin: 16px 0 0; }
+  iframe { width: 100%; height: 280px; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
+  textarea:focus-visible, iframe:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button.reset { margin-top: 8px; background: none; border: 1px solid var(--border); color: var(--muted); padding: 4px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+  button.reset:hover { color: var(--accent); border-color: var(--accent); }
+  table.ref { border-collapse: collapse; width: 100%; margin-top: 12px; }
+  table.ref th, table.ref td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
+  table.ref th { background: var(--accent-soft); }
+  .pager { display: flex; justify-content: space-between; gap: 12px; max-width: 1060px; margin: 0 auto; padding: 0 16px 40px; }
+  .pager a { padding: 10px 18px; border-radius: 10px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-weight: 600; }
+  .pager a.primary { background: var(--accent); color: #fff; }
+  footer { text-align: center; color: var(--muted); padding: 0 16px 48px; }
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.toc { position: static; }
+    nav.toc ol { display: flex; flex-wrap: wrap; gap: 4px; }
+    .playground { grid-template-columns: 1fr; }
+    section { padding: 20px; }
+  }
+</style>
+</head>
+<body data-console="false">
+<header>
+<nav class="series" aria-label="Tutorial series"><a href="index.html">1. HTML basics</a><a href="css.html">2. CSS</a><a href="advanced.html" aria-current="page">3. Advanced HTML</a><a href="javascript.html">4. JavaScript</a></nav>
+<h1>Advanced HTML</h1>
+<p>Semantic structure, accessibility, richer forms and built-in interactive elements.</p>
+</header>
+<div class="layout">
+<nav class="toc" aria-label="Tutorial sections"><ol><li><a href="#semantic">1. Semantic layout</a></li><li><a href="#a11y">2. Accessibility basics</a></li><li><a href="#forms">3. Forms in depth</a></li><li><a href="#media">4. Figures and media</a></li><li><a href="#interactive">5. Built-in interactive elements</a></li><li><a href="#head">6. Metadata and SEO</a></li><li><a href="#next">7. Next steps</a></li></ol></nav>
+<main><section id="semantic"><h2><span class="num">1</span>Semantic layout</h2><p>A page built only from <code class="inline">&lt;div&gt;</code> elements means nothing to a screen reader or search engine. Semantic elements describe the role of each region: <code class="inline">&lt;header&gt;</code>, <code class="inline">&lt;nav&gt;</code>, <code class="inline">&lt;main&gt;</code>, <code class="inline">&lt;article&gt;</code>, <code class="inline">&lt;section&gt;</code>, <code class="inline">&lt;aside&gt;</code> and <code class="inline">&lt;footer&gt;</code>.</p><p>The editor below adds a little CSS only so you can see the regions. The meaning comes from the tags themselves.</p><div class="playground"><div><div class="pane-label">HTML</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;style&gt;
+  body &gt; * { border: 1px dashed #888; padding: 6px; margin: 4px 0; }
+  header { background: #e7ecff; }
+  nav { background: #fff3bf; }
+  aside { background: #ffe3e3; }
+  footer { background: #d3f9d8; }
+&lt;/style&gt;
+
+&lt;header&gt;Site header&lt;/header&gt;
+&lt;nav&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt; | &lt;a href=&quot;#&quot;&gt;About&lt;/a&gt;&lt;/nav&gt;
+&lt;main&gt;
+  &lt;article&gt;
+    &lt;h1&gt;Article title&lt;/h1&gt;
+    &lt;p&gt;Self-contained content that makes sense on its own.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;aside&gt;Related links&lt;/aside&gt;
+&lt;/main&gt;
+&lt;footer&gt;Site footer&lt;/footer&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip">Use <code class="inline">&lt;main&gt;</code> once per page. Use <code class="inline">&lt;article&gt;</code> for content that could be shared on its own, and <code class="inline">&lt;section&gt;</code> for a themed group, ideally with a heading.</div></section><section id="a11y"><h2><span class="num">2</span>Accessibility basics</h2><p>Accessible HTML works for people using screen readers, keyboards and voice control. Most of it comes from using the right element: a real <code class="inline">&lt;button&gt;</code> is focusable and responds to Enter and Space, a styled <code class="inline">&lt;div&gt;</code> is not.</p><p>Other essentials: meaningful <code class="inline">alt</code> text, a logical heading order, a <code class="inline">lang</code> attribute on <code class="inline">&lt;html&gt;</code>, and <code class="inline">&lt;label&gt;</code> on every form control. Use <code class="inline">aria-label</code> only when there is no visible text to point to.</p><div class="playground"><div><div class="pane-label">HTML</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;h1&gt;Accessible examples&lt;/h1&gt;
+
+&lt;button type=&quot;button&quot; aria-label=&quot;Close dialog&quot;&gt;&amp;times;&lt;/button&gt;
+
+&lt;p&gt;Tab to the controls below with your keyboard:&lt;/p&gt;
+&lt;a href=&quot;#&quot;&gt;A real link&lt;/a&gt;
+&lt;button type=&quot;button&quot;&gt;A real button&lt;/button&gt;
+
+&lt;img alt=&quot;&quot; width=&quot;40&quot; height=&quot;40&quot;
+  src=&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; width=&#x27;40&#x27; height=&#x27;40&#x27;%3E%3Ccircle cx=&#x27;20&#x27; cy=&#x27;20&#x27; r=&#x27;18&#x27; fill=&#x27;%233b5bdb&#x27;/%3E%3C/svg%3E&quot;&gt;
+&lt;p&gt;Decorative images get an empty &lt;code&gt;alt=&quot;&quot;&lt;/code&gt; so screen readers skip them.&lt;/p&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip">Rule of thumb: if you can do it with a native element, do it. ARIA attributes are a patch for when you cannot.</div></section><section id="forms"><h2><span class="num">3</span>Forms in depth</h2><p>Modern inputs give you validation and mobile keyboards for free. Useful <code class="inline">type</code> values include <code class="inline">email</code>, <code class="inline">url</code>, <code class="inline">number</code>, <code class="inline">date</code>, <code class="inline">range</code>, <code class="inline">color</code> and <code class="inline">password</code>. Validate with <code class="inline">required</code>, <code class="inline">min</code>, <code class="inline">max</code>, <code class="inline">minlength</code> and <code class="inline">pattern</code>.</p><p>Group related controls in a <code class="inline">&lt;fieldset&gt;</code> with a <code class="inline">&lt;legend&gt;</code>, and offer suggestions with <code class="inline">&lt;datalist&gt;</code>.</p><div class="playground"><div><div class="pane-label">HTML</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;form onsubmit=&quot;event.preventDefault(); alert(&#x27;Valid!&#x27;)&quot;&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Sign up&lt;/legend&gt;
+
+    &lt;p&gt;&lt;label&gt;Email&lt;br&gt;
+      &lt;input type=&quot;email&quot; required&gt;&lt;/label&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;label&gt;Age (18 to 99)&lt;br&gt;
+      &lt;input type=&quot;number&quot; min=&quot;18&quot; max=&quot;99&quot; required&gt;&lt;/label&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;label&gt;Postcode (letters and digits)&lt;br&gt;
+      &lt;input pattern=&quot;[A-Za-z0-9 ]{5,8}&quot; title=&quot;5 to 8 letters or digits&quot;&gt;&lt;/label&gt;&lt;/p&gt;
+
+    &lt;p&gt;&lt;label&gt;Favourite language&lt;br&gt;
+      &lt;input list=&quot;langs&quot;&gt;&lt;/label&gt;&lt;/p&gt;
+    &lt;datalist id=&quot;langs&quot;&gt;
+      &lt;option value=&quot;HTML&quot;&gt;
+      &lt;option value=&quot;CSS&quot;&gt;
+      &lt;option value=&quot;JavaScript&quot;&gt;
+    &lt;/datalist&gt;
+
+    &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
+  &lt;/fieldset&gt;
+&lt;/form&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip">Browser validation is a convenience, not security. Always validate again on the server.</div></section><section id="media"><h2><span class="num">4</span>Figures and media</h2><p><code class="inline">&lt;figure&gt;</code> and <code class="inline">&lt;figcaption&gt;</code> pair content with a caption. For audio and video use <code class="inline">&lt;audio&gt;</code> and <code class="inline">&lt;video&gt;</code> with the <code class="inline">controls</code> attribute, and offer fallback sources and text.</p><p>The video below has no real file because this page is self-contained. In your own page, point <code class="inline">src</code> at a file or URL.</p><div class="playground"><div><div class="pane-label">HTML</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;figure&gt;
+  &lt;img alt=&quot;A blue square&quot;
+    width=&quot;120&quot; height=&quot;120&quot;
+    src=&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; width=&#x27;120&#x27; height=&#x27;120&#x27;%3E%3Crect width=&#x27;120&#x27; height=&#x27;120&#x27; rx=&#x27;16&#x27; fill=&#x27;%233b5bdb&#x27;/%3E%3C/svg%3E&quot;&gt;
+  &lt;figcaption&gt;Figure 1: a captioned image.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;video controls width=&quot;240&quot; poster=&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; width=&#x27;240&#x27; height=&#x27;135&#x27;%3E%3Crect width=&#x27;240&#x27; height=&#x27;135&#x27; fill=&#x27;%2312151f&#x27;/%3E%3C/svg%3E&quot;&gt;
+  &lt;source src=&quot;intro.mp4&quot; type=&quot;video/mp4&quot;&gt;
+  Your browser does not support video.
+&lt;/video&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip">Avoid <code class="inline">autoplay</code> with sound. It is disruptive and most browsers block it anyway. Provide captions or a transcript for spoken content.</div></section><section id="interactive"><h2><span class="num">5</span>Built-in interactive elements</h2><p>Some interactivity needs no JavaScript at all. <code class="inline">&lt;details&gt;</code> and <code class="inline">&lt;summary&gt;</code> make a collapsible section, <code class="inline">&lt;progress&gt;</code> and <code class="inline">&lt;meter&gt;</code> show values, and <code class="inline">&lt;dialog&gt;</code> creates a modal (opening it dynamically does need a little JavaScript, which page 4 covers).</p><div class="playground"><div><div class="pane-label">HTML</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;details open&gt;
+  &lt;summary&gt;What is HTML?&lt;/summary&gt;
+  &lt;p&gt;The structure of a web page.&lt;/p&gt;
+&lt;/details&gt;
+
+&lt;p&gt;Course progress:
+  &lt;progress value=&quot;65&quot; max=&quot;100&quot;&gt;65%&lt;/progress&gt;&lt;/p&gt;
+
+&lt;p&gt;Disk usage:
+  &lt;meter value=&quot;0.8&quot; low=&quot;0.5&quot; high=&quot;0.75&quot; optimum=&quot;0.2&quot;&gt;80%&lt;/meter&gt;&lt;/p&gt;
+
+&lt;dialog open&gt;
+  &lt;p&gt;A dialog, shown with the &lt;code&gt;open&lt;/code&gt; attribute.&lt;/p&gt;
+&lt;/dialog&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip"><strong>Try it:</strong> remove <code class="inline">open</code> from <code class="inline">&lt;details&gt;</code> to see it start collapsed.</div></section><section id="head"><h2><span class="num">6</span>Metadata and SEO</h2><p>The <code class="inline">&lt;head&gt;</code> is invisible to visitors but vital to browsers, search engines and social sites. This one is read-only because it shows what goes in a real page's head rather than something you can preview.</p><pre class="static"><code>&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;title&gt;Clear, specific page title&lt;/title&gt;
+  &lt;meta name=&quot;description&quot; content=&quot;One or two sentences shown in search results.&quot;&gt;
+  &lt;link rel=&quot;icon&quot; href=&quot;/favicon.ico&quot;&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot;&gt;
+  &lt;meta property=&quot;og:title&quot; content=&quot;Title for social sharing&quot;&gt;
+  &lt;meta property=&quot;og:image&quot; content=&quot;https://example.com/preview.png&quot;&gt;
+&lt;/head&gt;</code></pre><div class="tip">Every page should have a unique <code class="inline">&lt;title&gt;</code> and <code class="inline">description</code>. Together with good headings and semantic HTML, that covers most of the basics of on-page SEO.</div></section><section id="next"><h2><span class="num">7</span>Next steps</h2><p>A summary of the page, then on to the last topic.</p><table class="ref"><thead><tr><th>Topic</th><th>Remember</th></tr></thead><tbody><tr><td>Semantic elements</td><td>Use tags that describe meaning, not just appearance</td></tr><tr><td>Accessibility</td><td>Native elements first, <code class="inline">alt</code> text, labels, logical headings</td></tr><tr><td>Forms</td><td>Right input <code class="inline">type</code>, validation attributes, <code class="inline">fieldset</code> and <code class="inline">legend</code></td></tr><tr><td>Interactive elements</td><td><code class="inline">details</code>, <code class="inline">progress</code>, <code class="inline">meter</code> and <code class="inline">dialog</code></td></tr><tr><td>Metadata</td><td>Unique <code class="inline">title</code> and <code class="inline">description</code> on every page</td></tr></tbody></table><p>You can test your pages with the free <a href="https://validator.w3.org/" target="_blank" rel="noopener">W3C Markup Validator</a> and your browser's Lighthouse accessibility audit. Next up: JavaScript.</p></section></main>
+</div>
+<div class="pager"><a href="css.html">&larr; CSS</a><a class="primary" href="javascript.html">Next: JavaScript &rarr;</a></div>
+<footer>Edit any box above to experiment. Nothing you type is saved or sent anywhere.</footer>
+<script>
+  const CONSOLE_SHIM = `<script>
+    const lines = [];
+    const flush = () => {
+      if (!document.body) return;
+      let out = document.getElementById('__console');
+      if (!out) {
+        out = document.createElement('pre');
+        out.id = '__console';
+        out.style.cssText = 'background:#12151f;color:#9be9a8;padding:8px;margin:12px 0 0;border-radius:6px;font-size:12px;white-space:pre-wrap';
+        document.body.appendChild(out);
+      }
+      out.textContent = lines.join('\n');
+    };
+    console.log = (...args) => {
+      lines.push(args.map((a) => (typeof a === 'object' ? JSON.stringify(a) : String(a))).join(' '));
+      flush();
+    };
+    document.addEventListener('DOMContentLoaded', flush);
+  <\/script>`;
+  const BASE = '<style>body{font-family:system-ui,sans-serif;margin:12px;color:#1d2433}</style>';
+  const withConsole = document.body.dataset.console === 'true';
+
+  document.querySelectorAll('.playground').forEach((pg) => {
+    const editor = pg.querySelector('[data-editor]');
+    const frame = pg.querySelector('iframe');
+    const reset = pg.querySelector('.reset');
+    const original = editor.value;
+    const render = () => {
+      frame.srcdoc = BASE + (withConsole ? CONSOLE_SHIM : '') + editor.value;
+    };
+    editor.addEventListener('input', render);
+    editor.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      e.preventDefault();
+      editor.setRangeText('  ', editor.selectionStart, editor.selectionEnd, 'end');
+      render();
+    });
+    reset.addEventListener('click', () => {
+      editor.value = original;
+      render();
+    });
+    render();
+  });
+
+  const links = [...document.querySelectorAll('nav.toc a')];
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        links.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
+      });
+    },
+    { rootMargin: '-30% 0px -60% 0px' }
+  );
+  document.querySelectorAll('section').forEach((s) => observer.observe(s));
+</script>
+</body>
+</html>

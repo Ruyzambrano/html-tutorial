@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learn JavaScript</title>
+<style>
+  :root {
+    --bg: #f7f8fa; --surface: #ffffff; --text: #1d2433; --muted: #5b6475;
+    --accent: #3b5bdb; --accent-soft: #e7ecff; --border: #dde1ea; --code-bg: #12151f; --code-text: #e6e9f2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1219; --surface: #181c27; --text: #e6e9f2; --muted: #9aa3b5;
+      --accent: #8da2ff; --accent-soft: #232a45; --border: #2a3042; --code-bg: #0b0d13;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  header { padding: 40px 16px 36px; text-align: center; background: var(--accent-soft); border-bottom: 1px solid var(--border); }
+  header h1 { margin: 0 0 8px; font-size: clamp(2rem, 6vw, 3rem); }
+  header p { margin: 0 auto; max-width: 560px; color: var(--muted); }
+  .series { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 28px; }
+  .series a { padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); text-decoration: none; font-size: 0.9rem; }
+  .series a:hover { color: var(--accent); border-color: var(--accent); }
+  .series a[aria-current="page"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 32px; max-width: 1060px; margin: 0 auto; padding: 32px 16px 32px; }
+  nav.toc { position: sticky; top: 24px; align-self: start; }
+  nav.toc ol { list-style: none; margin: 0; padding: 0; }
+  nav.toc a { display: block; padding: 6px 12px; border-radius: 8px; color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+  nav.toc a:hover, nav.toc a.active { background: var(--accent-soft); color: var(--accent); }
+  section { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px; margin-bottom: 24px; }
+  section h2 { margin-top: 0; }
+  section h2 .num { display: inline-block; width: 32px; height: 32px; line-height: 32px; text-align: center; border-radius: 50%; background: var(--accent); color: #fff; font-size: 0.95rem; margin-right: 10px; vertical-align: middle; }
+  code.inline { background: var(--accent-soft); color: var(--accent); padding: 2px 6px; border-radius: 5px; font-size: 0.9em; }
+  .tip { border-left: 4px solid var(--accent); background: var(--accent-soft); padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 16px 0; }
+  .playground { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  .pane-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 4px; }
+  textarea, pre.static { width: 100%; background: var(--code-bg); color: var(--code-text); border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.85rem; line-height: 1.5; tab-size: 2; }
+  textarea { height: 280px; resize: vertical; }
+  pre.static { overflow-x: auto; margin: 16px 0 0; }
+  iframe { width: 100%; height: 280px; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
+  textarea:focus-visible, iframe:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button.reset { margin-top: 8px; background: none; border: 1px solid var(--border); color: var(--muted); padding: 4px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+  button.reset:hover { color: var(--accent); border-color: var(--accent); }
+  table.ref { border-collapse: collapse; width: 100%; margin-top: 12px; }
+  table.ref th, table.ref td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
+  table.ref th { background: var(--accent-soft); }
+  .pager { display: flex; justify-content: space-between; gap: 12px; max-width: 1060px; margin: 0 auto; padding: 0 16px 40px; }
+  .pager a { padding: 10px 18px; border-radius: 10px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-weight: 600; }
+  .pager a.primary { background: var(--accent); color: #fff; }
+  footer { text-align: center; color: var(--muted); padding: 0 16px 48px; }
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: 1fr; }
+    nav.toc { position: static; }
+    nav.toc ol { display: flex; flex-wrap: wrap; gap: 4px; }
+    .playground { grid-template-columns: 1fr; }
+    section { padding: 20px; }
+  }
+</style>
+</head>
+<body data-console="true">
+<header>
+<nav class="series" aria-label="Tutorial series"><a href="index.html">1. HTML basics</a><a href="css.html">2. CSS</a><a href="advanced.html">3. Advanced HTML</a><a href="javascript.html" aria-current="page">4. JavaScript</a></nav>
+<h1>Learn JavaScript</h1>
+<p>Add behaviour to your pages. Run the code, change it, and see what happens.</p>
+</header>
+<div class="layout">
+<nav class="toc" aria-label="Tutorial sections"><ol><li><a href="#what">1. What is JavaScript?</a></li><li><a href="#variables">2. Variables and data types</a></li><li><a href="#functions">3. Functions and conditions</a></li><li><a href="#arrays">4. Arrays and loops</a></li><li><a href="#dom">5. Changing the page (the DOM)</a></li><li><a href="#events">6. Responding to events</a></li><li><a href="#project">7. Mini project: a to-do list</a></li><li><a href="#next">8. Next steps</a></li></ol></nav>
+<main><section id="what"><h2><span class="num">1</span>What is JavaScript?</h2><p>HTML gives a page structure, CSS styles it, and JavaScript makes it <strong>do</strong> things: respond to clicks, update content, validate input. It goes inside a <code class="inline">&lt;script&gt;</code> element, usually at the end of <code class="inline">&lt;body&gt;</code>.</p><p><code class="inline">console.log()</code> prints a value for debugging. In these examples it prints into the green box under the result. In a real browser you would see it in the developer tools console (F12).</p><div class="playground"><div><div class="pane-label">HTML + JavaScript</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;h1 id=&quot;title&quot;&gt;Hello&lt;/h1&gt;
+
+&lt;script&gt;
+  console.log(&quot;JavaScript is running&quot;);
+  console.log(2 + 3);
+&lt;/script&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip"><strong>Try it:</strong> change the numbers or the message and watch the output.</div></section><section id="variables"><h2><span class="num">2</span>Variables and data types</h2><p>Store values with <code class="inline">const</code> (cannot be reassigned) or <code class="inline">let</code> (can be). Prefer <code class="inline">const</code> unless you need to change the value. The common types are strings, numbers, booleans, arrays and objects.</p><div class="playground"><div><div class="pane-label">JavaScript</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;script&gt;
+  const name = &quot;Ada&quot;;
+  let score = 10;
+  const isLearning = true;
+  const skills = [&quot;HTML&quot;, &quot;CSS&quot;, &quot;JS&quot;];
+  const person = { name: name, age: 36 };
+
+  score = score + 5;
+
+  console.log(`Hello, ${name}!`);
+  console.log(&quot;Score:&quot;, score);
+  console.log(&quot;Skills:&quot;, skills);
+  console.log(&quot;First skill:&quot;, skills[0]);
+  console.log(&quot;Age:&quot;, person.age);
+  console.log(typeof isLearning);
+&lt;/script&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip">Backticks create <strong>template literals</strong>, which let you embed values with <code class="inline">${...}</code>. Arrays count from zero, so <code class="inline">skills[0]</code> is the first item.</div></section><section id="functions"><h2><span class="num">3</span>Functions and conditions</h2><p>A function is a reusable block of code. <code class="inline">if</code> and <code class="inline">else</code> choose between paths based on a condition. Compare values with <code class="inline">===</code> (strict equality), <code class="inline">&lt;</code>, <code class="inline">&gt;</code> and combine with <code class="inline">&amp;&amp;</code> (and) or <code class="inline">||</code> (or).</p><div class="playground"><div><div class="pane-label">JavaScript</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;script&gt;
+  function grade(score) {
+    if (score &gt;= 70) return &quot;Distinction&quot;;
+    if (score &gt;= 50) return &quot;Pass&quot;;
+    return &quot;Try again&quot;;
+  }
+
+  const double = (n) =&gt; n * 2;
+
+  console.log(grade(82));
+  console.log(grade(55));
+  console.log(grade(30));
+  console.log(double(21));
+&lt;/script&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip">Always use <code class="inline">===</code> rather than <code class="inline">==</code>. The strict version does not quietly convert types, which avoids surprising bugs.</div></section><section id="arrays"><h2><span class="num">4</span>Arrays and loops</h2><p>Loops repeat work. <code class="inline">for...of</code> visits each item in an array. For transforming data, <code class="inline">map</code> builds a new array from the old one and <code class="inline">filter</code> keeps only items that pass a test.</p><div class="playground"><div><div class="pane-label">JavaScript</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;script&gt;
+  const prices = [4, 12, 7, 20, 3];
+
+  for (const price of prices) {
+    console.log(&quot;Price:&quot;, price);
+  }
+
+  const withVat = prices.map((p) =&gt; p * 1.2);
+  const expensive = prices.filter((p) =&gt; p &gt; 5);
+  const total = prices.reduce((sum, p) =&gt; sum + p, 0);
+
+  console.log(&quot;With VAT:&quot;, withVat);
+  console.log(&quot;Over 5:&quot;, expensive);
+  console.log(&quot;Total:&quot;, total);
+&lt;/script&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip"><code class="inline">map</code>, <code class="inline">filter</code> and <code class="inline">reduce</code> do not change the original array. They return a new value, which makes code easier to reason about.</div></section><section id="dom"><h2><span class="num">5</span>Changing the page (the DOM)</h2><p>The browser turns your HTML into a tree of objects called the <strong>DOM</strong>. JavaScript can find elements with <code class="inline">document.querySelector()</code> and change their text, attributes and styles.</p><div class="playground"><div><div class="pane-label">HTML + JavaScript</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;h2 id=&quot;greeting&quot;&gt;Original text&lt;/h2&gt;
+&lt;p class=&quot;note&quot;&gt;A paragraph.&lt;/p&gt;
+
+&lt;script&gt;
+  const heading = document.querySelector(&quot;#greeting&quot;);
+  heading.textContent = &quot;Changed by JavaScript&quot;;
+  heading.style.color = &quot;crimson&quot;;
+
+  const note = document.querySelector(&quot;.note&quot;);
+  note.classList.add(&quot;highlight&quot;);
+  note.textContent = &quot;This paragraph was edited too.&quot;;
+&lt;/script&gt;
+
+&lt;style&gt;.highlight { background: #fff3bf; padding: 6px; }&lt;/style&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip">Use <code class="inline">textContent</code> to insert plain text. Avoid <code class="inline">innerHTML</code> with untrusted input, because it can open the door to cross-site scripting attacks.</div></section><section id="events"><h2><span class="num">6</span>Responding to events</h2><p>Events are things that happen: a click, a key press, a form submission. Attach a handler with <code class="inline">addEventListener</code>, and the function runs each time the event fires.</p><div class="playground"><div><div class="pane-label">HTML + JavaScript</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;button id=&quot;add&quot;&gt;Clicked 0 times&lt;/button&gt;
+&lt;input id=&quot;box&quot; placeholder=&quot;Type something&quot;&gt;
+&lt;p id=&quot;echo&quot;&gt;&lt;/p&gt;
+
+&lt;script&gt;
+  let count = 0;
+  const button = document.querySelector(&quot;#add&quot;);
+
+  button.addEventListener(&quot;click&quot;, () =&gt; {
+    count += 1;
+    button.textContent = `Clicked ${count} times`;
+  });
+
+  document.querySelector(&quot;#box&quot;).addEventListener(&quot;input&quot;, (event) =&gt; {
+    document.querySelector(&quot;#echo&quot;).textContent = &quot;You typed: &quot; + event.target.value;
+  });
+&lt;/script&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip">Handlers receive an <code class="inline">event</code> object. <code class="inline">event.target</code> is the element that triggered it.</div></section><section id="project"><h2><span class="num">7</span>Mini project: a to-do list</h2><p>This brings it together: a form, an array, a function that redraws the list, and events. Try adding items, then click one to remove it.</p><div class="playground"><div><div class="pane-label">HTML + JavaScript</div><textarea data-editor spellcheck="false" aria-label="Code editor">&lt;form id=&quot;form&quot;&gt;
+  &lt;input id=&quot;task&quot; placeholder=&quot;New task&quot; required&gt;
+  &lt;button&gt;Add&lt;/button&gt;
+&lt;/form&gt;
+&lt;ul id=&quot;list&quot;&gt;&lt;/ul&gt;
+
+&lt;script&gt;
+  const tasks = [&quot;Learn HTML&quot;, &quot;Learn CSS&quot;];
+  const list = document.querySelector(&quot;#list&quot;);
+
+  function render() {
+    list.replaceChildren();
+    tasks.forEach((task, index) =&gt; {
+      const li = document.createElement(&quot;li&quot;);
+      li.textContent = task;
+      li.style.cursor = &quot;pointer&quot;;
+      li.title = &quot;Click to remove&quot;;
+      li.addEventListener(&quot;click&quot;, () =&gt; {
+        tasks.splice(index, 1);
+        render();
+      });
+      list.appendChild(li);
+    });
+  }
+
+  document.querySelector(&quot;#form&quot;).addEventListener(&quot;submit&quot;, (event) =&gt; {
+    event.preventDefault();
+    const input = document.querySelector(&quot;#task&quot;);
+    tasks.push(input.value.trim());
+    input.value = &quot;&quot;;
+    render();
+  });
+
+  render();
+&lt;/script&gt;</textarea><button class="reset" type="button">Reset</button></div><div><div class="pane-label">Result</div><iframe title="Live preview" sandbox="allow-scripts allow-forms allow-modals"></iframe></div></div><div class="tip"><strong>Challenge:</strong> make completed tasks strike through instead of disappearing. You will need an object per task, such as <code class="inline">{ text: &quot;...&quot;, done: false }</code>.</div></section><section id="next"><h2><span class="num">8</span>Next steps</h2><p>You have now seen the full front-end trio working together.</p><table class="ref"><thead><tr><th>Concept</th><th>Remember</th></tr></thead><tbody><tr><td><code class="inline">const</code> / <code class="inline">let</code></td><td>Prefer <code class="inline">const</code>; use <code class="inline">let</code> when the value changes</td></tr><tr><td>Functions</td><td>Reusable blocks; arrow functions for short ones</td></tr><tr><td><code class="inline">map</code> / <code class="inline">filter</code> / <code class="inline">reduce</code></td><td>Transform arrays without mutating them</td></tr><tr><td><code class="inline">querySelector</code></td><td>Find elements to read or change</td></tr><tr><td><code class="inline">addEventListener</code></td><td>Run code when something happens</td></tr></tbody></table><p>Good places to go from here: fetching data from APIs with <code class="inline">fetch()</code>, saving data with <code class="inline">localStorage</code>, and a framework such as React once the fundamentals feel comfortable. The <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting" target="_blank" rel="noopener">MDN JavaScript guide</a> is the best free reference.</p></section></main>
+</div>
+<div class="pager"><a href="advanced.html">&larr; Advanced HTML</a><span></span></div>
+<footer>Edit any box above to experiment. Nothing you type is saved or sent anywhere.</footer>
+<script>
+  const CONSOLE_SHIM = `<script>
+    const lines = [];
+    const flush = () => {
+      if (!document.body) return;
+      let out = document.getElementById('__console');
+      if (!out) {
+        out = document.createElement('pre');
+        out.id = '__console';
+        out.style.cssText = 'background:#12151f;color:#9be9a8;padding:8px;margin:12px 0 0;border-radius:6px;font-size:12px;white-space:pre-wrap';
+        document.body.appendChild(out);
+      }
+      out.textContent = lines.join('\n');
+    };
+    console.log = (...args) => {
+      lines.push(args.map((a) => (typeof a === 'object' ? JSON.stringify(a) : String(a))).join(' '));
+      flush();
+    };
+    document.addEventListener('DOMContentLoaded', flush);
+  <\/script>`;
+  const BASE = '<style>body{font-family:system-ui,sans-serif;margin:12px;color:#1d2433}</style>';
+  const withConsole = document.body.dataset.console === 'true';
+
+  document.querySelectorAll('.playground').forEach((pg) => {
+    const editor = pg.querySelector('[data-editor]');
+    const frame = pg.querySelector('iframe');
+    const reset = pg.querySelector('.reset');
+    const original = editor.value;
+    const render = () => {
+      frame.srcdoc = BASE + (withConsole ? CONSOLE_SHIM : '') + editor.value;
+    };
+    editor.addEventListener('input', render);
+    editor.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab') return;
+      e.preventDefault();
+      editor.setRangeText('  ', editor.selectionStart, editor.selectionEnd, 'end');
+      render();
+    });
+    reset.addEventListener('click', () => {
+      editor.value = original;
+      render();
+    });
+    render();
+  });
+
+  const links = [...document.querySelectorAll('nav.toc a')];
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        links.forEach((a) => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
+      });
+    },
+    { rootMargin: '-30% 0px -60% 0px' }
+  );
+  document.querySelectorAll('section').forEach((s) => observer.observe(s));
+</script>
+</body>
+</html>
